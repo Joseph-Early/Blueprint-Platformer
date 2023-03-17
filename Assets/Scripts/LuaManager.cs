@@ -1,9 +1,8 @@
-using System.Numerics;
+﻿using System.Numerics;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using MoonSharp.Interpreter;
-using UnityEngine.UI;
 
 public class LuaManager : MonoBehaviour
 {
@@ -46,7 +45,23 @@ public class LuaManager : MonoBehaviour
     // Add code
     public void AddScript()
     {
-        var text = GameObject.Find("TextScript").GetComponent<Text>().text;
+        var text = GameObject.Find("TextScript").GetComponent<TMPro.TextMeshProUGUI>().text;
+        
+        #region Debug
+        List<char> charList = new List<char>(text);
+        for (int i = 0; i < charList.Count; i++)
+        {
+           print(charList[i]);
+        }
+
+        print(charList.Count);
+        print(text.Length);
+        #endregion
+
+        // Delete the zero width space
+        // Removing this code will break everything as TMPro adds this character into the text field
+        text = text.Replace("\u200B", "");
+
         LuaScripts.Push(text);
     }
 }
