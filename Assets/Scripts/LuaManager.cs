@@ -22,6 +22,7 @@ public class LuaManager : MonoBehaviour
             // Add globals (Exposing properties and methods)
             Script script = new Script();
             script.Globals["Move"] = (Func<float, float, int>)Move;
+            script.Globals["Print"] = (Action<string>)Print;
 
             script.DoString(scriptCode);
         }
@@ -39,6 +40,10 @@ public class LuaManager : MonoBehaviour
         trans.position = pos;
 
         return 0;
+    }
+    private static void Print(string message)
+    {
+        UnityEngine.Debug.Log(message);
     }
     #endregion
 

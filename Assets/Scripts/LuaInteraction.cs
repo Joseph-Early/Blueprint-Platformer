@@ -51,7 +51,7 @@ namespace Lua
 
         internal void Expose(bool ExposeMovement, bool ExposeEnabled, bool ExposeColours, bool ExposeRotation, bool ExposeScale, bool ReadOnly)
         {
-            script.Globals["Terminate"] = (Func<bool>)Terminate; // Terminate script
+            script.Globals["Terminate"] = (Func<bool, bool>)Terminate; // Terminate script
 
             // Expose movement functionality
             if (ExposeMovement)
@@ -63,8 +63,7 @@ namespace Lua
         #region Exposed functions
         private static int Move(float x, float y)
         {
-            var trans = GetComponent<Transform>();
-
+            var trans = GameObject.Find("Platform").GetComponent<Transform>();
             var pos = new UnityEngine.Vector2(trans.position.x + x, trans.position.y + y);
 
             trans.position = pos;
@@ -74,11 +73,14 @@ namespace Lua
 
         private static bool Terminate(bool reset)
         {
-            // Reset everything here
-            script.Call(script.Globals["Tick"]);
+            // // Reset everything here
+            // if (reset)
+            //     script.Call(script.Globals["Reset"]);
 
-            // Terminate script
-            state = State.ExecutionNone;
+            // // Terminate script
+            // state = State.ExecutionNone;
+
+            return reset;
         }
         #endregion
     }
