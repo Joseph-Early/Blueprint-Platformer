@@ -24,7 +24,19 @@ public class LuaManager : MonoBehaviour
             script.Globals["Move"] = (Func<float, float, int>)Move;
             script.Globals["Print"] = (Action<string>)Print;
 
-            script.DoString(scriptCode);
+            // Execute the code and check for exceptions
+            try
+            {
+                script.DoString(scriptCode);
+            }
+            catch (ScriptRuntimeException e)
+            {
+                UnityEngine.Debug.LogWarning($"User script execution exception: {e.DecoratedMessage}");
+            }
+            catch (Exception e)
+            {
+                UnityEngine.Debug.LogError($"Error caught {e}");
+            }
         }
     }
 
@@ -51,12 +63,12 @@ public class LuaManager : MonoBehaviour
     public void AddScript()
     {
         var text = GameObject.Find("TextScript").GetComponent<TMPro.TextMeshProUGUI>().text;
-        
+
         #region Debug
         List<char> charList = new List<char>(text);
         for (int i = 0; i < charList.Count; i++)
         {
-           print(charList[i]);
+            print(charList[i]);
         }
 
         print(charList.Count);
