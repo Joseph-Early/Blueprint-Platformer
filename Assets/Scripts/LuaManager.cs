@@ -62,20 +62,21 @@ public class LuaManager : MonoBehaviour
     #region Exposed functions
     private static int Move(string controllerName, float x, float y)
     {
-        foreach (LuaControllable controller in controllers)
+        var controller = ReturnLuaObject(controllerName);
+
+        if (controller.controller != null)
         {
-            if (controller.IdentifierInLevel == controllerName)
-            {
-                var obj = controller.gameObject;
-                var trans = obj.GetComponent<Transform>();
-                var pos = new UnityEngine.Vector2(trans.position.x + x, trans.position.y + y);
+            // Get the transform
+            var trans = controller.obj.GetComponent<Transform>();
 
-                // Set the transform
-                trans.position = pos;
+            // Calculate the new position
+            var pos = new UnityEngine.Vector2(trans.position.x + x, trans.position.y + y);
 
-                // Return 0 - success
-                return 0;
-            }
+            // Set the transform
+            trans.position = pos;
+
+            // Return 0 - success
+            return 0;
         }
 
         // Return 1 - error
@@ -86,6 +87,24 @@ public class LuaManager : MonoBehaviour
         UnityEngine.Debug.Log(message);
     }
     #endregion
+
+    // Find LuaController by name
+    private static (GameObject obj, LuaControllable controller) ReturnLuaObject(string controllerName)
+    {
+        // Iterate through all LuaControllers
+        foreach (LuaControllable controller in controllers)
+        {
+            // Check if name matches identifier name
+            if (controller.IdentifierInLevel == controllerName)
+            {
+                // Return the gameobject and controller
+                return (controller.gameObject, controller);
+            }
+        }
+
+        // Return null - failed to get controller and gameobject of matching name
+        return (null, null);
+    }
 
     // Add code
     public void AddScript()
