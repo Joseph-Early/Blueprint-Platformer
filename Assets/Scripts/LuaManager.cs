@@ -10,6 +10,24 @@ public class LuaManager : MonoBehaviour
 
     private void Awake() => LuaScripts = new Stack<string>();
 
+    private static LuaControllable[] controllers;
+
+    // Get a reference to all the LuaControllable's
+    private void Start()
+    {
+        // Get a reference to all the gameobjects with LuaControllable tag
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("LuaControllable");
+
+        // Temporary list to controllers so can be converted to a more performant array
+        var controllersList = new List<LuaControllable>();
+
+        // Find the LuaControllable for each controller object
+        foreach (var controller in objs) controllersList.Add(controller.GetComponent<LuaControllable>());
+
+        // Set the controllers to controllersList
+        controllers = controllersList.ToArray();
+    }
+
 
     // Execute code from Stack
     void Update()
@@ -21,7 +39,7 @@ public class LuaManager : MonoBehaviour
 
             // Add globals (Exposing properties and methods)
             Script script = new Script();
-            script.Globals["Move"] = (Func<float, float, int>)Move;
+            script.Globals["Move"] = (Func<string, float, float, int>)Move;
             script.Globals["Print"] = (Action<string>)Print;
 
             // Execute the code and check for exceptions
@@ -42,16 +60,26 @@ public class LuaManager : MonoBehaviour
 
 
     #region Exposed functions
-    private static int Move(float x, float y)
+    private static int Move(string controllerName, float x, float y)
     {
-        var obj = "Platform";
-        var trans = GameObject.Find(obj).GetComponent<Transform>();
+        foreach (LuaControllable controller in controllers)
+        {
+            if (controller.IdentifierInLevel == controllerName)
+            {
+                var obj = controller.gameObject;
+                var trans = obj.GetComponent<Transform>();
+                var pos = new UnityEngine.Vector2(trans.position.x + x, trans.position.y + y);
 
-        var pos = new UnityEngine.Vector2(trans.position.x + x, trans.position.y + y);
+                // Set the transform
+                trans.position = pos;
 
-        trans.position = pos;
+                // Return 0 - success
+                return 0;
+            }
+        }
 
-        return 0;
+        // Return 1 - error
+        return 1;
     }
     private static void Print(string message)
     {
