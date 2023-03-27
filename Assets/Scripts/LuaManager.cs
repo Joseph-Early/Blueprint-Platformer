@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Globalization;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using MoonSharp.Interpreter;
@@ -74,6 +75,10 @@ public class LuaManager : MonoBehaviour
     private static int SetPositionRelative(string controllerName, float x, float y)
     {
         var controller = ReturnLuaObject(controllerName);
+
+        print($"Legality check on: {System.Reflection.MethodBase.GetCurrentMethod().Name}");
+
+        controller.controller.CheckOperationLegality(System.Reflection.MethodBase.GetCurrentMethod().Name);
 
         if (controller.controller != null)
         {
