@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using MoonSharp.Interpreter;
@@ -28,7 +27,6 @@ public class LuaManager : MonoBehaviour
         controllers = controllersList.ToArray();
     }
 
-
     // Execute code from Stack
     void Update()
     {
@@ -39,7 +37,20 @@ public class LuaManager : MonoBehaviour
 
             // Add globals (Exposing properties and methods)
             Script script = new Script();
-            script.Globals["Move"] = (Func<string, float, float, int>)Move;
+
+            // Translation
+            script.Globals["Move"] = (Func<string, float, float, int>)SetPositionRelative;
+            script.Globals["MoveAbs"] = (Func<string, float, float, int>)SetPositionAbsolute;
+
+            // Rotation
+            script.Globals["Rotate"] = (Func<string, float, int>)SetRotationRelative;
+            script.Globals["RotateAbs"] = (Func<string, float, int>)SetRotationAbsolute;
+
+            // Scale
+            script.Globals["Scale"] = (Func<string, float, float, int>)SetScaleRelative;
+            script.Globals["ScaleAbs"] = (Func<string, float, float, int>)SetScaleAbsolute;
+
+            // Miscellaneous
             script.Globals["Print"] = (Action<string>)Print;
 
             // Execute the code and check for exceptions
@@ -60,7 +71,7 @@ public class LuaManager : MonoBehaviour
 
 
     #region Exposed functions
-    private static int Move(string controllerName, float x, float y)
+    private static int SetPositionRelative(string controllerName, float x, float y)
     {
         var controller = ReturnLuaObject(controllerName);
 
@@ -74,6 +85,116 @@ public class LuaManager : MonoBehaviour
 
             // Set the transform
             trans.position = pos;
+
+            // Return 0 - success
+            return 0;
+        }
+
+        // Return 1 - error
+        return 1;
+    }
+    private static int SetPositionAbsolute(string controllerName, float x, float y)
+    {
+        var controller = ReturnLuaObject(controllerName);
+
+        if (controller.controller != null)
+        {
+            // Get the transform
+            var trans = controller.obj.GetComponent<Transform>();
+
+            // Calculate the new position
+            var pos = new UnityEngine.Vector2(x, y);
+
+            // Set the transform
+            trans.position = pos;
+
+            // Return 0 - success
+            return 0;
+        }
+
+        // Return 1 - error
+        return 1;
+    }
+    private static int SetRotationRelative(string controllerName, float angle)
+    {
+        var controller = ReturnLuaObject(controllerName);
+
+        if (controller.controller != null)
+        {
+            // Get the transform
+            var trans = controller.obj.GetComponent<Transform>();
+
+            // Calculate the new rotation
+            var rot = new UnityEngine.Vector3(trans.rotation.x, trans.rotation.y, angle);
+
+            // Set the rotation
+            trans.Rotate(rot);
+
+            // Return 0 - success
+            return 0;
+        }
+
+        // Return 1 - error
+        return 1;
+    }
+    private static int SetRotationAbsolute(string controllerName, float angle)
+    {
+        var controller = ReturnLuaObject(controllerName);
+
+        if (controller.controller != null)
+        {
+            // Get the transform
+            var trans = controller.obj.GetComponent<Transform>();
+
+            // Calculate the new rotation
+            var rot = new UnityEngine.Vector3(trans.rotation.x, trans.rotation.y, angle);
+
+            // Set the rotation
+            trans.rotation = UnityEngine.Quaternion.Euler(rot);
+
+            // Return 0 - success
+            return 0;
+        }
+
+        // Return 1 - error
+        return 1;
+    }
+    private static int SetScaleRelative(string controllerName, float x, float y)
+    {
+        var controller = ReturnLuaObject(controllerName);
+
+        if (controller.controller != null)
+        {
+            // Get the transform
+            var trans = controller.obj.GetComponent<Transform>();
+
+            // Calculate the new scale
+            var scale = new UnityEngine.Vector3(trans.localScale.x + x, trans.localScale.y + y, trans.localScale.z);
+
+            // Set the scale
+            trans.localScale = scale;
+
+            // Return 0 - success
+            return 0;
+        }
+
+        // Return 1 - error
+        return 1;
+    }
+    private static int SetScaleAbsolute(string controllerName, float x, float y)
+    {
+        var controller = ReturnLuaObject(controllerName);
+
+        if (controller.controller != null)
+        {
+            // Get the transform
+            var trans = controller.obj.GetComponent<Transform>();
+
+            // Calculate the new scale
+            var scale = new UnityEngine.Vector3(x, y, trans.localScale.z);
+
+            // Set the scale
+            trans.localScale = scale;
 
             // Return 0 - success
             return 0;
@@ -110,17 +231,6 @@ public class LuaManager : MonoBehaviour
     public void AddScript()
     {
         var text = GameObject.Find("TextScript").GetComponent<TMPro.TextMeshProUGUI>().text;
-
-        #region Debug
-        List<char> charList = new List<char>(text);
-        for (int i = 0; i < charList.Count; i++)
-        {
-            print(charList[i]);
-        }
-
-        print(charList.Count);
-        print(text.Length);
-        #endregion
 
         // Delete the zero width space
         // Removing this code will break everything as TMPro adds this character into the text field

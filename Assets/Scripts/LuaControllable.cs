@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -17,12 +15,6 @@ public class LuaControllable : MonoBehaviour
 
         // Add LuaControllable to find all LuaControllable's
         tag = "LuaControllable";
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        
     }
 
     // On mouse over over game object, display name of IdentifierInLevel
