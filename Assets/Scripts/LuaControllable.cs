@@ -10,7 +10,7 @@ public class LuaControllable : MonoBehaviour
     private GameObject IdentifierNamePopUp;
 
     // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         // Change the gameobject name to the IdentifierInLevel name
         name = IdentifierInLevel;
