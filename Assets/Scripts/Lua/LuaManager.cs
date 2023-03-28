@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using MoonSharp.Interpreter;
+using Lua.Modules;
 
 namespace Lua
 {
@@ -12,7 +13,7 @@ namespace Lua
 
         private void Awake() => LuaScripts = new Stack<string>();
 
-        private static LuaControllable[] controllers;
+        public static LuaControllable[] Controllers { get; private set; } = null;
 
         // Get a reference to all the LuaControllable's
         private void Start()
@@ -27,7 +28,7 @@ namespace Lua
             foreach (var controller in objs) controllersList.Add(controller.GetComponent<LuaControllable>());
 
             // Set the controllers to controllersList
-            controllers = controllersList.ToArray();
+            Controllers = controllersList.ToArray();
         }
 
         // Execute code from Stack
@@ -42,19 +43,19 @@ namespace Lua
                 Script script = new Script();
 
                 // Translation
-                script.Globals["Move"] = (Func<string, float, float, int>)SetPositionRelative;
-                script.Globals["MoveAbs"] = (Func<string, float, float, int>)SetPositionAbsolute;
+                script.Globals["Move"] = (Func<string, float, float, int>)Movement.SetPositionRelative;
+                script.Globals["MoveAbs"] = (Func<string, float, float, int>)Movement.SetPositionAbsolute;
 
                 // Rotation
-                script.Globals["Rotate"] = (Func<string, float, int>)SetRotationRelative;
-                script.Globals["RotateAbs"] = (Func<string, float, int>)SetRotationAbsolute;
+                script.Globals["Rotate"] = (Func<string, float, int>)Rotation.SetRotationRelative;
+                script.Globals["RotateAbs"] = (Func<string, float, int>)Rotation.SetRotationAbsolute;
 
                 // Scale
-                script.Globals["Scale"] = (Func<string, float, float, int>)SetScaleRelative;
-                script.Globals["ScaleAbs"] = (Func<string, float, float, int>)SetScaleAbsolute;
+                script.Globals["Scale"] = (Func<string, float, float, int>)Scale.SetScaleRelative;
+                script.Globals["ScaleAbs"] = (Func<string, float, float, int>)Scale.SetScaleAbsolute;
 
                 // Miscellaneous
-                script.Globals["Print"] = (Action<string>)Print;
+                script.Globals["Print"] = (Action<string>)Miscellaneous.Print;
 
                 // Execute the code and check for exceptions
                 try
@@ -70,218 +71,6 @@ namespace Lua
                     UnityEngine.Debug.LogError($"Error caught {e}");
                 }
             }
-        }
-
-
-        #region Exposed functions
-        private static int SetPositionRelative(string controllerName, float x, float y)
-        {
-            var controller = ReturnLuaObject(controllerName);
-
-            if (controller.controller != null)
-            {
-                // Illegal operation check
-                switch (controller.controller.CheckOperationLegality(System.Reflection.MethodBase.GetCurrentMethod().Name))
-                {
-                    case false:
-                        return 2; // Illegal operation
-                    case null:
-                        return 3; // Unknown operation
-                }
-
-                // Get the transform
-                var trans = controller.obj.GetComponent<Transform>();
-
-                // Calculate the new position
-                var pos = new UnityEngine.Vector2(trans.position.x + x, trans.position.y + y);
-
-                // Set the transform
-                trans.position = pos;
-
-                // Return 0 - success
-                return 0;
-            }
-
-            // Return 1 - error
-            return 1;
-        }
-        private static int SetPositionAbsolute(string controllerName, float x, float y)
-        {
-            var controller = ReturnLuaObject(controllerName);
-
-            if (controller.controller != null)
-            {
-                // Illegal operation check
-                switch (controller.controller.CheckOperationLegality(System.Reflection.MethodBase.GetCurrentMethod().Name))
-                {
-                    case false:
-                        return 2; // Illegal operation
-                    case null:
-                        return 3; // Unknown operation
-                }
-
-                // Get the transform
-                var trans = controller.obj.GetComponent<Transform>();
-
-                // Calculate the new position
-                var pos = new UnityEngine.Vector2(x, y);
-
-                // Set the transform
-                trans.position = pos;
-
-                // Return 0 - success
-                return 0;
-            }
-
-            // Return 1 - error
-            return 1;
-        }
-        private static int SetRotationRelative(string controllerName, float angle)
-        {
-            var controller = ReturnLuaObject(controllerName);
-
-            if (controller.controller != null)
-            {
-                // Illegal operation check
-                switch (controller.controller.CheckOperationLegality(System.Reflection.MethodBase.GetCurrentMethod().Name))
-                {
-                    case false:
-                        return 2; // Illegal operation
-                    case null:
-                        return 3; // Unknown operation
-                }
-
-                // Get the transform
-                var trans = controller.obj.GetComponent<Transform>();
-
-                // Calculate the new rotation
-                var rot = new UnityEngine.Vector3(trans.rotation.x, trans.rotation.y, angle);
-
-                // Set the rotation
-                trans.Rotate(rot);
-
-                // Return 0 - success
-                return 0;
-            }
-
-            // Return 1 - error
-            return 1;
-        }
-        private static int SetRotationAbsolute(string controllerName, float angle)
-        {
-            var controller = ReturnLuaObject(controllerName);
-
-            if (controller.controller != null)
-            {
-                // Illegal operation check
-                switch (controller.controller.CheckOperationLegality(System.Reflection.MethodBase.GetCurrentMethod().Name))
-                {
-                    case false:
-                        return 2; // Illegal operation
-                    case null:
-                        return 3; // Unknown operation
-                }
-
-                // Get the transform
-                var trans = controller.obj.GetComponent<Transform>();
-
-                // Calculate the new rotation
-                var rot = new UnityEngine.Vector3(trans.rotation.x, trans.rotation.y, angle);
-
-                // Set the rotation
-                trans.rotation = UnityEngine.Quaternion.Euler(rot);
-
-                // Return 0 - success
-                return 0;
-            }
-
-            // Return 1 - error
-            return 1;
-        }
-        private static int SetScaleRelative(string controllerName, float x, float y)
-        {
-            var controller = ReturnLuaObject(controllerName);
-
-            if (controller.controller != null)
-            {
-                // Illegal operation check
-                switch (controller.controller.CheckOperationLegality(System.Reflection.MethodBase.GetCurrentMethod().Name))
-                {
-                    case false:
-                        return 2; // Illegal operation
-                    case null:
-                        return 3; // Unknown operation
-                }
-
-                // Get the transform
-                var trans = controller.obj.GetComponent<Transform>();
-
-                // Calculate the new scale
-                var scale = new UnityEngine.Vector3(trans.localScale.x + x, trans.localScale.y + y, trans.localScale.z);
-
-                // Set the scale
-                trans.localScale = scale;
-
-                // Return 0 - success
-                return 0;
-            }
-
-            // Return 1 - error
-            return 1;
-        }
-        private static int SetScaleAbsolute(string controllerName, float x, float y)
-        {
-            var controller = ReturnLuaObject(controllerName);
-
-            if (controller.controller != null)
-            {
-                // Illegal operation check
-                switch (controller.controller.CheckOperationLegality(System.Reflection.MethodBase.GetCurrentMethod().Name))
-                {
-                    case false:
-                        return 2; // Illegal operation
-                    case null:
-                        return 3; // Unknown operation
-                }
-                
-                // Get the transform
-                var trans = controller.obj.GetComponent<Transform>();
-
-                // Calculate the new scale
-                var scale = new UnityEngine.Vector3(x, y, trans.localScale.z);
-
-                // Set the scale
-                trans.localScale = scale;
-
-                // Return 0 - success
-                return 0;
-            }
-
-            // Return 1 - error
-            return 1;
-        }
-        private static void Print(string message)
-        {
-            UnityEngine.Debug.Log(message);
-        }
-        #endregion
-
-        // Find LuaController by name
-        private static (GameObject obj, LuaControllable controller) ReturnLuaObject(string controllerName)
-        {
-            // Iterate through all LuaControllers
-            foreach (LuaControllable controller in controllers)
-            {
-                // Check if name matches identifier name
-                if (controller.IdentifierInLevel == controllerName)
-                {
-                    // Return the gameobject and controller
-                    return (controller.gameObject, controller);
-                }
-            }
-
-            // Return null - failed to get controller and gameobject of matching name
-            return (null, null);
         }
 
         // Add code

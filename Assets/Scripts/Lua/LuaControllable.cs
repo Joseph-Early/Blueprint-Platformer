@@ -32,7 +32,7 @@ namespace Lua
         }
 
         // On mouse over over game object, display name of IdentifierInLevel
-        void OnMouseEnter()
+        private void OnMouseEnter()
         {
             print(IdentifierInLevel);
 
@@ -41,7 +41,7 @@ namespace Lua
             IdentifierNamePopUp.GetComponent<TextMeshPro>().text = $"\"{IdentifierInLevel}\"";
         }
 
-        void OnMouseExit()
+        private void OnMouseExit()
         {
             // Destroy the IdentifierNamePopUp
             if (IdentifierNamePopUp != null)
