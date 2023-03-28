@@ -1,19 +1,31 @@
-# Blueprint-Platformer
+# Blueprint Platformer
+*Exploration game where you explore levels however objects in the world are incomplete and you must script them using Lua to solve puzzles and advance.*
 
-Game systems:
-2D, side-scroller player controller
-    Jump
-    Move left and right
-    Health
-Enemies
-Lua Manager
-Audio manager
+## Sections
+- [Blueprint Platformer](#blueprint-platformer)
+  - [Sections](#sections)
+  - [Game systems - Basic Overview](#game-systems---basic-overview)
+  - [Third-party Libraries](#third-party-libraries)
+  - [API Documentation](#api-documentation)
+    - [Adding new functions which can be invoked by Lua](#adding-new-functions-which-can-be-invoked-by-lua)
 
+## Game systems - Basic Overview
+- 2D, side-scroller player controller
+    - Jump
+    - Move left and right
+    - Health
+- Enemies
+- Lua Manager
+- Audio manager
+
+## Third-party Libraries
+This game uses the following libraries:
+- [MoonSharp](https://www.moonsharp.org/) - C# Lua Interpreter
 
 ## API Documentation
 **NOTE**: The API is subject to change during development!
 
-### Adding new functions which can bew invoked by Lua
+### Adding new functions which can be invoked by Lua
 Inside the Scripts/`Lua.Modules`, create a module file using this template:
 ```cs
 using UnityEngine;
