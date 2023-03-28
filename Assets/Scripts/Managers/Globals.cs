@@ -12,6 +12,11 @@ namespace Managers
         public GameObject IdentifierNamePopUp;
         #endregion
 
-        private void Awake() => Instance = this;
+        private void Awake() {
+            if (Instance != null)
+                Destroy(Instance);
+
+            Instance = this;
+        }
     }
 }
