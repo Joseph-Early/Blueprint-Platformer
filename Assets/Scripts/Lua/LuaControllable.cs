@@ -13,6 +13,7 @@ namespace Lua
 
         #region Serialize fields for enabling allowed functions on an object
         [SerializeField] private bool SetPositionRelative = false;
+
         [SerializeField] private bool SetPositionAbsolute = false;
         [SerializeField] private bool SetRotationRelative = false;
         [SerializeField] private bool SetRotationAbsolute = false;
@@ -29,6 +30,8 @@ namespace Lua
 
             // Add LuaControllable to find all LuaControllable's
             tag = "LuaControllable";
+
+            print(SetPositionRelative);
         }
 
         // On mouse over over game object, display name of IdentifierInLevel
@@ -62,7 +65,14 @@ namespace Lua
         public bool? CheckOperationLegality(string operation)
         {
             // Get the property info for the property
-            var fieldInfo = GetType().GetField(operation);
+            FieldInfo fieldInfo = null;
+            foreach (var f in GetType().GetRuntimeFields())
+            {
+                if (f.Name != operation) continue;
+
+                fieldInfo = f;
+                break;
+            }
 
             // If the property info is not null, get the value of the property
             if (fieldInfo != null)
@@ -72,7 +82,7 @@ namespace Lua
             }
 
             // If the property info is null, return false and log an error
-            UnityEngine.Debug.LogError($"CheckOperationLegality errored, tried accessing the property {operation}");
+            UnityEngine.Debug.LogWarning($"CheckOperationLegality errored, tried accessing the property `{operation}`");
             return null;
         }
     }
