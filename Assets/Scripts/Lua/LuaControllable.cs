@@ -12,12 +12,12 @@ namespace Lua
         private GameObject IdentifierNamePopUp;
 
         #region Serialize fields for enabling allowed functions on an object
-        [SerializeField] public bool SetPositionRelative = false;
-        [SerializeField] public bool SetPositionAbsolute = false;
-        [SerializeField] public bool SetRotationRelative = false;
-        [SerializeField] public bool SetRotationAbsolute = false;
-        [SerializeField] public bool SetScaleRelative = false;
-        [SerializeField] public bool SetScaleAbsolute = false;
+        [SerializeField] private bool SetPositionRelative = false;
+        [SerializeField] private bool SetPositionAbsolute = false;
+        [SerializeField] private bool SetRotationRelative = false;
+        [SerializeField] private bool SetRotationAbsolute = false;
+        [SerializeField] private bool SetScaleRelative = false;
+        [SerializeField] private bool SetScaleAbsolute = false;
 
         #endregion
 

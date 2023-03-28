@@ -43,6 +43,7 @@ namespace Lua
                 Script script = new Script();
 
                 // Translation
+                #region Expose
                 script.Globals["Move"] = (Func<string, float, float, int>)Movement.SetPositionRelative;
                 script.Globals["MoveAbs"] = (Func<string, float, float, int>)Movement.SetPositionAbsolute;
 
@@ -56,6 +57,7 @@ namespace Lua
 
                 // Miscellaneous
                 script.Globals["Print"] = (Action<string>)Miscellaneous.Print;
+                #endregion
 
                 // Execute the code and check for exceptions
                 try
