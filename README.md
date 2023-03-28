@@ -39,7 +39,7 @@ namespace Lua.Modules
 ```
 
 To create an example method, you must provide a return type (optionally with parameters) e.g. (ensure that the method is static and public):<br>
-**Note**: There is a way to bypass giving a return type if you use a parameter (see 'Lua.Modules.Miscellaneous' and `Print` however this is not recommended)
+**Note**: There is a way to bypass giving a return type if you use a parameter (see `Lua.Modules.Miscellaneous` and `Print` however this is not recommended)
 ```cs
 // Example method 
 public static int ExampleMethod(string message)
