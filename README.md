@@ -38,10 +38,10 @@ public static int ExampleMethod(string message)
 }
 ```
 
-To expose the method so it can be used in Lua, there are two more steps. Inside `Lua.LuaManager`, there is a region called "Expose". In there, create either a Func or Action with a reference to the functions in your module e.g.
+To expose the method so it can be used in Lua, there are two more steps. Inside `Lua.LuaManager`, there is a region called "Expose". In there, create either a `Func` or `Action` with a reference to the functions in your module e.g.
 ```cs
 // Miscellaneous
-script.Globals["ExampleMethod"] = (Action<string>)ModuleName.ExampleMethod;
+script.Globals["ExampleMethod"] = (Func<string, int>)ModuleName.ExampleMethod;
 ```
 
 Finally, it is required to add a toggle to the method inside of `Lua.LuaControllable` if the method requires the use of either `Utils.ReturnLuaObject` or `LuaControllable.CheckOperationLegality`. To do this, go inside `Lua.LuaControllable` and then inside the region " Serialize fields for enabling allowed functions on an object". Then create a boolean value (private and SerializeField) with the exact name of the function created (requiring your function be named uniquely among all exposed methods) e.g.
