@@ -1,5 +1,9 @@
-# Blueprint Platformer
+# Blueprint Platformer - WIP
 *Exploration game where you explore levels however objects in the world are incomplete and you must script them using Lua to solve puzzles and advance.*
+
+## Important
+**READ ME**: this project is still in development and most features are currently not complete and/or the project may be in an unplayable state 
+For details of the development of the game, visit the [Trello board](https://trello.com/b/ZCXg9sbP/finale-blueprint-platformer). 
 
 ## Sections
 - [Blueprint Platformer](#blueprint-platformer)
