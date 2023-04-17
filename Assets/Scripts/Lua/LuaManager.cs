@@ -78,7 +78,10 @@ namespace Lua
         // Add code
         public void AddScript()
         {
-            var text = GameObject.Find("TextScript").GetComponent<TMPro.TextMeshProUGUI>().text;
+            var text = GameObject.Find("MainText").GetComponent<TMPro.TextMeshProUGUI>().text;
+
+            // Print to console
+            UnityEngine.Debug.Log(text);
 
             // Delete the zero width space
             // Removing this code will break everything as TMPro adds this character into the text field
