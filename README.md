@@ -6,7 +6,8 @@
 For details of the development of the game, visit the [Trello board](https://trello.com/b/ZCXg9sbP/finale-blueprint-platformer). 
 
 ## Sections
-- [Blueprint Platformer](#blueprint-platformer)
+- [Blueprint Platformer - WIP](#blueprint-platformer---wip)
+  - [Important](#important)
   - [Sections](#sections)
   - [Game systems - Basic Overview](#game-systems---basic-overview)
   - [Third-party Libraries](#third-party-libraries)
@@ -25,6 +26,7 @@ For details of the development of the game, visit the [Trello board](https://tre
 ## Third-party Libraries
 This game uses the following libraries:
 - [MoonSharp](https://www.moonsharp.org/) - C# Lua Interpreter
+- [In-Game Code Editor](https://assetstore.unity.com/packages/tools/gui/ingame-code-editor-144254) - Code Editor (paid)
 
 ## API Documentation
 **NOTE**: The API is subject to change during development!
