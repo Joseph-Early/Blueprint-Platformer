@@ -10,6 +10,7 @@ namespace Lua
     public class LuaManager : MonoBehaviour
     {
         public Stack<string> LuaScripts;
+        public static string[] FunctionGlobals;
 
         private void Awake() => LuaScripts = new Stack<string>();
 
@@ -29,6 +30,8 @@ namespace Lua
 
             // Set the controllers to controllersList
             Controllers = controllersList.ToArray();
+
+            
         }
 
         // Execute code from Stack
