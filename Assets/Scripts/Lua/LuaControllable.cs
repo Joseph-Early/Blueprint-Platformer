@@ -19,6 +19,7 @@ namespace Lua
         [SerializeField] private bool SetRotationAbsolute = false;
         [SerializeField] private bool SetScaleRelative = false;
         [SerializeField] private bool SetScaleAbsolute = false;
+        [SerializeField] private bool SetSpriteColour = false;
 
         #endregion
 

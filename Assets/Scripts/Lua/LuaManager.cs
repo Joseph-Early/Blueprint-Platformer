@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MoonSharp.Interpreter;
 using Lua.Modules;
+using System.Collections;
 
 namespace Lua
 {
@@ -12,9 +13,17 @@ namespace Lua
         public Stack<string> LuaScripts;
         public static string[] FunctionGlobals;
 
+        private static int luaCallsASecond = 30;
+
         private void Awake() => LuaScripts = new Stack<string>();
 
         public static LuaControllable[] Controllers { get; private set; } = null;
+
+        string tickFunction = "Tick";
+
+        Script LuaScript;
+
+        string LuaScriptPlayerCode = ""; // Store what the player wrote to execute the tick method provided, if any
 
         // Get a reference to all the LuaControllable's
         private void Start()
@@ -31,7 +40,31 @@ namespace Lua
             // Set the controllers to controllersList
             Controllers = controllersList.ToArray();
 
-            
+            // Create the Lua script which is executing the code the player enters
+            LuaScript = new Script();
+
+            // Expose functions to Lua
+            #region Expose
+            LuaScript.Globals["Move"] = (Func<string, float, float, int>)Movement.SetPositionRelative;
+            LuaScript.Globals["MoveAbs"] = (Func<string, float, float, int>)Movement.SetPositionAbsolute;
+
+            // Rotation
+            LuaScript.Globals["Rotate"] = (Func<string, float, int>)Rotation.SetRotationRelative;
+            LuaScript.Globals["RotateAbs"] = (Func<string, float, int>)Rotation.SetRotationAbsolute;
+
+            // Scale
+            LuaScript.Globals["Scale"] = (Func<string, float, float, int>)Scale.SetScaleRelative;
+            LuaScript.Globals["ScaleAbs"] = (Func<string, float, float, int>)Scale.SetScaleAbsolute;
+
+            // Sprite module
+            LuaScript.Globals["SetColour"] = (Func<string, float, float, float, float, int>)SpriteModule.SetSpriteColour;
+
+            // Miscellaneous
+            LuaScript.Globals["Print"] = (Action<string>)Miscellaneous.Print;
+            #endregion
+
+            // Invoke Lua tick
+            StartCoroutine(LuaTick());
         }
 
         // Execute code from Stack
@@ -42,38 +75,24 @@ namespace Lua
                 // Read the top value from the stack
                 var scriptCode = LuaScripts.Pop();
 
-                // Add globals (Exposing properties and methods)
-                Script script = new Script();
-
-                // Translation
-                #region Expose
-                script.Globals["Move"] = (Func<string, float, float, int>)Movement.SetPositionRelative;
-                script.Globals["MoveAbs"] = (Func<string, float, float, int>)Movement.SetPositionAbsolute;
-
-                // Rotation
-                script.Globals["Rotate"] = (Func<string, float, int>)Rotation.SetRotationRelative;
-                script.Globals["RotateAbs"] = (Func<string, float, int>)Rotation.SetRotationAbsolute;
-
-                // Scale
-                script.Globals["Scale"] = (Func<string, float, float, int>)Scale.SetScaleRelative;
-                script.Globals["ScaleAbs"] = (Func<string, float, float, int>)Scale.SetScaleAbsolute;
-
-                // Miscellaneous
-                script.Globals["Print"] = (Action<string>)Miscellaneous.Print;
-                #endregion
-
+                // Create a copy of the code provided with a goto end which calls tick and no other code
+                string JumpToEndName = "__reserved_end__";
+                LuaScriptPlayerCode = @"
+                goto __reserved_end__
+                scriptCode
+                
+                ::__reserved_end__::
+                tickFunction()
+                ".Replace("scriptCode", scriptCode).Replace("tickFunction", tickFunction).Replace("__reserved_end__", JumpToEndName);
+                
                 // Execute the code and check for exceptions
                 try
                 {
-                    script.DoString(scriptCode);
+                    LuaScript.DoString(scriptCode);
                 }
-                catch (ScriptRuntimeException e)
+                catch (System.Exception)
                 {
-                    UnityEngine.Debug.LogWarning($"User script execution exception: {e.DecoratedMessage}");
-                }
-                catch (Exception e)
-                {
-                    UnityEngine.Debug.LogError($"Error caught {e}");
+                    UnityEngine.Debug.Log("Invalid script provided");
                 }
             }
         }
@@ -91,6 +110,27 @@ namespace Lua
             text = text.Replace("\u200B", "");
 
             LuaScripts.Push(text);
+        }
+
+        // Update loop
+        private IEnumerator LuaTick()
+        {
+            while (true)
+            {
+
+                yield return new WaitForSeconds(1f / luaCallsASecond);
+                
+                // Try to execute script, will fail if missing tick function
+                try
+                {
+                    LuaScript.DoString(LuaScriptPlayerCode);
+                }
+                catch (System.Exception)
+                {
+                    UnityEngine.Debug.Log("Invalid tick code");
+                }
+                
+            }
         }
     }
 }
