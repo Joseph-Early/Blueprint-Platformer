@@ -243,13 +243,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b7b883fab13afd4eaf2faa7549fd152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IdentifierInLevel: Platform_02
-  SetPositionRelative: 0
-  SetPositionAbsolute: 0
-  SetRotationRelative: 0
-  SetRotationAbsolute: 0
-  SetScaleRelative: 0
-  SetScaleAbsolute: 0
+  IdentifierInLevel: P4
+  SetPositionRelative: 1
+  SetPositionAbsolute: 1
+  SetRotationRelative: 1
+  SetRotationAbsolute: 1
+  SetScaleRelative: 1
+  SetScaleAbsolute: 1
+  SetSpriteColour: 1
 --- !u!61 &464109644
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -858,13 +859,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b7b883fab13afd4eaf2faa7549fd152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IdentifierInLevel: Platform_03
-  SetPositionRelative: 0
-  SetPositionAbsolute: 0
-  SetRotationRelative: 0
-  SetRotationAbsolute: 0
-  SetScaleRelative: 0
-  SetScaleAbsolute: 0
+  IdentifierInLevel: P2
+  SetPositionRelative: 1
+  SetPositionAbsolute: 1
+  SetRotationRelative: 1
+  SetRotationAbsolute: 1
+  SetScaleRelative: 1
+  SetScaleAbsolute: 1
+  SetSpriteColour: 1
 --- !u!61 &1096849197
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1334,12 +1336,12 @@ PrefabInstance:
     - target: {fileID: 224842857508534150, guid: 79a74f96889fc1c429f043e7fa8caf72,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.9999695
+      value: -0.99993896
       objectReference: {fileID: 0}
     - target: {fileID: 224857267984180766, guid: 79a74f96889fc1c429f043e7fa8caf72,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.9082149
+      value: -0.90834093
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79a74f96889fc1c429f043e7fa8caf72, type: 3}
@@ -1441,13 +1443,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b7b883fab13afd4eaf2faa7549fd152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IdentifierInLevel: Platform_04
-  SetPositionRelative: 0
-  SetPositionAbsolute: 0
-  SetRotationRelative: 0
-  SetRotationAbsolute: 0
-  SetScaleRelative: 0
-  SetScaleAbsolute: 0
+  IdentifierInLevel: P1
+  SetPositionRelative: 1
+  SetPositionAbsolute: 1
+  SetRotationRelative: 1
+  SetRotationAbsolute: 1
+  SetScaleRelative: 1
+  SetScaleAbsolute: 1
+  SetSpriteColour: 1
 --- !u!61 &1455030766
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2150,13 +2153,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b7b883fab13afd4eaf2faa7549fd152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IdentifierInLevel: Player
-  SetPositionRelative: 0
-  SetPositionAbsolute: 0
-  SetRotationRelative: 0
-  SetRotationAbsolute: 0
-  SetScaleRelative: 0
-  SetScaleAbsolute: 0
+  IdentifierInLevel: P
+  SetPositionRelative: 1
+  SetPositionAbsolute: 1
+  SetRotationRelative: 1
+  SetRotationAbsolute: 1
+  SetScaleRelative: 1
+  SetScaleAbsolute: 1
+  SetSpriteColour: 1
 --- !u!1 &1803098515
 GameObject:
   m_ObjectHideFlags: 0
@@ -2428,13 +2432,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b7b883fab13afd4eaf2faa7549fd152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IdentifierInLevel: Platform_01
-  SetPositionRelative: 0
-  SetPositionAbsolute: 0
-  SetRotationRelative: 0
-  SetRotationAbsolute: 0
-  SetScaleRelative: 0
-  SetScaleAbsolute: 0
+  IdentifierInLevel: P3
+  SetPositionRelative: 1
+  SetPositionAbsolute: 1
+  SetRotationRelative: 1
+  SetRotationAbsolute: 1
+  SetScaleRelative: 1
+  SetScaleAbsolute: 1
+  SetSpriteColour: 1
 --- !u!1 &1901759832
 GameObject:
   m_ObjectHideFlags: 0
@@ -2559,10 +2564,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b7b883fab13afd4eaf2faa7549fd152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IdentifierInLevel: Ground
-  SetPositionRelative: 0
-  SetPositionAbsolute: 0
-  SetRotationRelative: 0
-  SetRotationAbsolute: 0
-  SetScaleRelative: 0
-  SetScaleAbsolute: 0
+  IdentifierInLevel: G
+  SetPositionRelative: 1
+  SetPositionAbsolute: 1
+  SetRotationRelative: 1
+  SetRotationAbsolute: 1
+  SetScaleRelative: 1
+  SetScaleAbsolute: 1
+  SetSpriteColour: 1
