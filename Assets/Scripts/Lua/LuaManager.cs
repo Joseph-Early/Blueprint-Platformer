@@ -41,6 +41,15 @@ namespace Lua
             Controllers = controllersList.ToArray();
 
             // Create the Lua script which is executing the code the player enters
+            NewLuaScript();
+
+            // Invoke Lua tick
+            StartCoroutine(LuaTick());
+        }
+
+        private void NewLuaScript()
+        {
+            // Create a new script
             LuaScript = new Script();
 
             // Expose functions to Lua
@@ -62,9 +71,6 @@ namespace Lua
             // Miscellaneous
             LuaScript.Globals["Print"] = (Action<string>)Miscellaneous.Print;
             #endregion
-
-            // Invoke Lua tick
-            StartCoroutine(LuaTick());
         }
 
         // Execute code from Stack
@@ -72,19 +78,26 @@ namespace Lua
         {
             if (LuaScripts.Count != 0)
             {
+                // Create new script
+                NewLuaScript();
+
                 // Read the top value from the stack
                 var scriptCode = LuaScripts.Pop();
 
                 // Create a copy of the code provided with a goto end which calls tick and no other code
-                string JumpToEndName = "__reserved_end__";
                 LuaScriptPlayerCode = @"
+                -- Go to the end of the script
                 goto __reserved_end__
-                scriptCode
+
+                -- Player code
+                __reserved_code__
                 
+                -- Call the tick function
                 ::__reserved_end__::
-                tickFunction()
-                ".Replace("scriptCode", scriptCode).Replace("tickFunction", tickFunction).Replace("__reserved_end__", JumpToEndName);
-                
+                __reserved_tick__()
+
+                ".Replace("__reserved_code__", scriptCode).Replace("__reserved_tick__", tickFunction);
+
                 // Execute the code and check for exceptions
                 try
                 {
@@ -119,7 +132,7 @@ namespace Lua
             {
 
                 yield return new WaitForSeconds(1f / luaCallsASecond);
-                
+
                 // Try to execute script, will fail if missing tick function
                 try
                 {
@@ -129,7 +142,6 @@ namespace Lua
                 {
                     UnityEngine.Debug.Log("Invalid tick code");
                 }
-                
             }
         }
     }
