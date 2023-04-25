@@ -1,8 +1,9 @@
+using System.Collections;
+using UnityEngine;
+using System.Linq;
+
 namespace Managers
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
 
     public class LevelWinState : MonoBehaviour
     {
@@ -45,17 +46,10 @@ namespace Managers
                 }
 
                 // Check all conditions are truth
-                var i = 0;
-                foreach (var winCondition in conditions)
+                if (conditions.All(x => x.conditionMet))
                 {
-                    // Conditions not met
-                    if (winCondition.conditionMet)
-                        i++;
-                }
-                // If i is greater than or equal to winConditions length, player has won
-                if (i >= conditions.Length)
-                {
-                    Debug.Log("Player has Won");
+                    // Win condition met
+                    Debug.Log("Win condition met");
                 }
 
                 // Wait                
@@ -63,18 +57,21 @@ namespace Managers
             }
         }
 
+        #region Condition value checks
+        // Check if the rotation of a game object is equal to a certain angle
         private bool CheckConditionRotation(GameObject gm, float angle)
         {
             var trans = gm.GetComponent<Transform>();
 
             // Check angle (2D)
             if (trans.eulerAngles.z == angle)
-                    return true;
+                return true;
 
             return false;
-            
+
         }
 
+        // Check if the scale of a game object is equal to a certain scale
         private bool CheckConditionScale(GameObject gm, Vector2 scale)
         {
             var trans = gm.GetComponent<Transform>();
@@ -84,9 +81,10 @@ namespace Managers
                 return true;
 
             return false;
-            
+
         }
 
+        // Check if the position of a game object is equal to a certain position
         private bool CheckConditionPosition(GameObject gm, Vector2 position)
         {
             var trans = gm.GetComponent<Transform>();
@@ -96,55 +94,60 @@ namespace Managers
                 return true;
 
             return false;
-            
+
         }
 
+        // Check if the colour of a sprite is equal to a certain colour
         private bool CheckConditionColour(GameObject gm, Vector4 colour)
         {
             var sprite = gm.GetComponent<SpriteRenderer>();
 
             if (sprite.color == new Color(colour.x, colour.y, colour.z, colour.z) && sprite.color.a == colour.w)
                 return true;
-            
+
             return false;
         }
-        
-        // Win condition types
-        enum WinType
-        {
-            OnValueEquals,
-            OnGoalReached
-        }
 
+        #endregion
+
+        #region Win condition struct and enums
         // Win condition struct to hold data
         [System.Serializable]
-        struct WinConditions
+        private struct WinConditions
         {
-            [SerializeField] public WinType state;
-            [SerializeField] public Vector4 value;
-            [SerializeField] public GameObject objectReference;
-            [SerializeField] public ValueToCheck toCheck;
-            [SerializeField] public bool conditionMet;
+            [SerializeField] public WinType state;  // Condition type - on value equals or on goal reached
+            [SerializeField] public Vector4 value;  // Value to check (e.g. colour, position, scale, angle etc.)
+            [SerializeField] public GameObject objectReference; // Reference to game object to check the value of
+            [SerializeField] public ValueToCheck toCheck; // What value to check
+            [SerializeField] public bool conditionMet; // If the condition has been met or not
 
-            WinConditions(Vector4 value, WinType state=WinType.OnGoalReached, ValueToCheck toCheck=ValueToCheck.NotApplicable, GameObject gm=null)
+            // Constructor
+            WinConditions(Vector4 value, WinType state = WinType.OnGoalReached, ValueToCheck toCheck = ValueToCheck.NotApplicable, GameObject objectReference = null)
             {
                 this.state = state;
                 this.toCheck = toCheck;
                 this.value = value;
-                this.objectReference = gm;
+                this.objectReference = objectReference;
                 conditionMet = false;
             }
         }
 
         // The variable to check
-        enum ValueToCheck
+        private enum ValueToCheck
         {
-            Colour4,
-            Position2D,
-            Scale2D,
-            Angle,
-            NotApplicable,
+            Colour4,        // RGBA (0-1)
+            Position2D,     // X and Y
+            Scale2D,        // X and Y
+            Angle,          // Z
+            NotApplicable,  // Not applicable
         }
 
+        // Win condition types
+        enum WinType
+        {
+            OnValueEquals,  // Check if a value equals a certain value
+            OnGoalReached   // Check if the goal has been reached
+        }
+        #endregion
     }
 }
