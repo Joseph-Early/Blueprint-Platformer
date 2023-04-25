@@ -123,6 +123,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &83451363 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1937729412433764, guid: 79a74f96889fc1c429f043e7fa8caf72,
+    type: 3}
+  m_PrefabInstance: {fileID: 1121328111}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &152662692
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,6 +140,8 @@ GameObject:
   - component: {fileID: 152662694}
   - component: {fileID: 152662693}
   - component: {fileID: 152662695}
+  - component: {fileID: 152662696}
+  - component: {fileID: 152662697}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -153,6 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9816391ba107fb449271e20a8ef50cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LuaText: 
 --- !u!4 &152662694
 Transform:
   m_ObjectHideFlags: 0
@@ -181,6 +190,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdentifierNamePopUp: {fileID: 7553524880390600973, guid: d53b8b4f8e5469c41ae14bed1e09926f,
     type: 3}
+--- !u!114 &152662696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152662692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afa045fd89e10c74b8cf5cf1471e57bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textEditor: {fileID: 83451363}
+--- !u!114 &152662697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152662692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bcce05de1fd32747b15b63c4482d744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  winConditions:
+  - state: 0
+    value: {x: 10, y: 10, z: 10}
+    gm: {fileID: 1731312381}
+    toCheck: 0
+    conditionMet: 0
 --- !u!1 &285761927
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,7 +414,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &489448298
 RectTransform:
   m_ObjectHideFlags: 0
@@ -388,9 +428,8 @@ RectTransform:
   m_Children:
   - {fileID: 1803098516}
   - {fileID: 1011646947}
-  - {fileID: 1120414243}
   m_Father: {fileID: 1468238667}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1045,11 +1084,15 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 489448298}
+    m_TransformParent: {fileID: 1468238667}
     m_Modifications:
     - target: {fileID: 1937729412433764, guid: 79a74f96889fc1c429f043e7fa8caf72, type: 3}
       propertyPath: m_Name
       value: InGameCodeEditor
+      objectReference: {fileID: 0}
+    - target: {fileID: 1937729412433764, guid: 79a74f96889fc1c429f043e7fa8caf72, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114069207860691744, guid: 79a74f96889fc1c429f043e7fa8caf72,
         type: 3}
@@ -1070,6 +1113,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textAlignment
       value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 114075605045220258, guid: 79a74f96889fc1c429f043e7fa8caf72,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.40392157
       objectReference: {fileID: 0}
     - target: {fileID: 114075605045220258, guid: 79a74f96889fc1c429f043e7fa8caf72,
         type: 3}
@@ -1221,7 +1269,7 @@ PrefabInstance:
     - target: {fileID: 224354381134797736, guid: 79a74f96889fc1c429f043e7fa8caf72,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 468.06744
+      value: 468.34393
       objectReference: {fileID: 0}
     - target: {fileID: 224578156659129400, guid: 79a74f96889fc1c429f043e7fa8caf72,
         type: 3}
@@ -1236,7 +1284,7 @@ PrefabInstance:
     - target: {fileID: 224578156659129400, guid: 79a74f96889fc1c429f043e7fa8caf72,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224578156659129400, guid: 79a74f96889fc1c429f043e7fa8caf72,
         type: 3}
@@ -1261,12 +1309,12 @@ PrefabInstance:
     - target: {fileID: 224578156659129400, guid: 79a74f96889fc1c429f043e7fa8caf72,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0.009765625
+      value: 0.241
       objectReference: {fileID: 0}
     - target: {fileID: 224578156659129400, guid: 79a74f96889fc1c429f043e7fa8caf72,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: -123.3121
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224578156659129400, guid: 79a74f96889fc1c429f043e7fa8caf72,
         type: 3}
@@ -1306,12 +1354,12 @@ PrefabInstance:
     - target: {fileID: 224578156659129400, guid: 79a74f96889fc1c429f043e7fa8caf72,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.12060547
       objectReference: {fileID: 0}
     - target: {fileID: 224578156659129400, guid: 79a74f96889fc1c429f043e7fa8caf72,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -61.656067
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224578156659129400, guid: 79a74f96889fc1c429f043e7fa8caf72,
         type: 3}
@@ -1341,7 +1389,7 @@ PrefabInstance:
     - target: {fileID: 224857267984180766, guid: 79a74f96889fc1c429f043e7fa8caf72,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.90834093
+      value: -1.03302
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79a74f96889fc1c429f043e7fa8caf72, type: 3}
@@ -1648,6 +1696,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 1120414243}
   - {fileID: 489448298}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -2179,7 +2228,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1803098516
 RectTransform:
   m_ObjectHideFlags: 0

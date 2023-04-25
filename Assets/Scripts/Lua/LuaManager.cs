@@ -10,12 +10,11 @@ namespace Lua
 {
     public class LuaManager : MonoBehaviour
     {
-        public Stack<string> LuaScripts;
+        bool executedOnce = false;
+        public string LuaText = "";
         public static string[] FunctionGlobals;
 
         private static int luaCallsASecond = 30;
-
-        private void Awake() => LuaScripts = new Stack<string>();
 
         public static LuaControllable[] Controllers { get; private set; } = null;
 
@@ -43,7 +42,7 @@ namespace Lua
             // Create the Lua script which is executing the code the player enters
             NewLuaScript();
 
-            // Invoke Lua tick
+            // Invoke Lua tick coroutine (yield waits everytime for 1 / luaCallsASecond (60fps))
             StartCoroutine(LuaTick());
         }
 
@@ -76,13 +75,13 @@ namespace Lua
         // Execute code from Stack
         void Update()
         {
-            if (LuaScripts.Count != 0)
+            if (!executedOnce)
             {
+                // Set executed once to true
+                executedOnce = true;
+
                 // Create new script
                 NewLuaScript();
-
-                // Read the top value from the stack
-                var scriptCode = LuaScripts.Pop();
 
                 // Create a copy of the code provided with a goto end which calls tick and no other code
                 LuaScriptPlayerCode = @"
@@ -96,12 +95,12 @@ namespace Lua
                 ::__reserved_end__::
                 __reserved_tick__()
 
-                ".Replace("__reserved_code__", scriptCode).Replace("__reserved_tick__", tickFunction);
+                ".Replace("__reserved_code__", LuaText).Replace("__reserved_tick__", tickFunction);
 
                 // Execute the code and check for exceptions
                 try
                 {
-                    LuaScript.DoString(scriptCode);
+                    LuaScript.DoString(LuaText);
                 }
                 catch (System.Exception)
                 {
@@ -111,18 +110,19 @@ namespace Lua
         }
 
         // Add code
-        public void AddScript()
+        public void SetScript(string code)
         {
-            var text = GameObject.Find("MainText").GetComponent<TMPro.TextMeshProUGUI>().text;
-
+            // Reset executed flag
+            executedOnce = false;
+            
             // Print to console
-            UnityEngine.Debug.Log(text);
+            UnityEngine.Debug.Log(code);
 
             // Delete the zero width space
             // Removing this code will break everything as TMPro adds this character into the text field
-            text = text.Replace("\u200B", "");
+            code = code.Replace("\u200B", "");
 
-            LuaScripts.Push(text);
+            LuaText = code;
         }
 
         // Update loop
@@ -140,7 +140,7 @@ namespace Lua
                 }
                 catch (System.Exception)
                 {
-                    UnityEngine.Debug.Log("Invalid tick code");
+                    // UnityEngine.Debug.Log("Invalid tick code");
                 }
             }
         }
