@@ -6,7 +6,13 @@ namespace Managers
 
     public class LevelWinState : MonoBehaviour
     {
-        [SerializeField] WinConditions[] winConditions;
+        // Tracks if the goal has been reached by the player
+        public bool goalReached = false;
+
+        // Expose conditions to beat the level to the inspector
+        [Header("Win Conditions")]
+        [Tooltip("Win conditions for the level")]
+        [SerializeField] WinConditions[] conditions;
 
         // Win condition checks
         void Start() => StartCoroutine(CheckAllConditionsAreMet());
@@ -16,19 +22,38 @@ namespace Managers
         {
             while (true)
             {
+                // Update each conditions' state
+                for (var x = 0; x < conditions.Length; x++)
+                {
+                    switch (conditions[x].toCheck)
+                    {
+                        case ValueToCheck.Colour4:
+                            conditions[x].conditionMet = CheckConditionColour(conditions[x].objectReference, conditions[x].value);
+                            break;
+                        case ValueToCheck.Position2D:
+                            conditions[x].conditionMet = CheckConditionPosition(conditions[x].objectReference, new Vector2(conditions[x].value.x, conditions[x].value.y));
+                            break;
+                        case ValueToCheck.Scale2D:
+                            conditions[x].conditionMet = CheckConditionScale(conditions[x].objectReference, new Vector2(conditions[x].value.x, conditions[x].value.y));
+                            break;
+                        case ValueToCheck.Angle:
+                            conditions[x].conditionMet = CheckConditionRotation(conditions[x].objectReference, conditions[x].value.x);
+                            break;
+                    }
+                    if (conditions[x].state == WinType.OnGoalReached)
+                        conditions[x].conditionMet = goalReached;
+                }
+
                 // Check all conditions are truth
                 var i = 0;
-                foreach (var winCondition in winConditions)
+                foreach (var winCondition in conditions)
                 {
-                    // TODO: Set win condition
-                     
-
                     // Conditions not met
                     if (winCondition.conditionMet)
                         i++;
                 }
                 // If i is greater than or equal to winConditions length, player has won
-                if (i >= winConditions.Length)
+                if (i >= conditions.Length)
                 {
                     Debug.Log("Player has Won");
                 }
@@ -38,13 +63,13 @@ namespace Managers
             }
         }
 
-        private bool CheckConditionRotation(GameObject gm, Vector2 rotation)
+        private bool CheckConditionRotation(GameObject gm, float angle)
         {
             var trans = gm.GetComponent<Transform>();
 
-            // Check X and Y
-            if (trans.localRotation.x == rotation.x && trans.localRotation.y == rotation.y)
-                return true;
+            // Check angle (2D)
+            if (trans.eulerAngles.z == angle)
+                    return true;
 
             return false;
             
@@ -78,45 +103,47 @@ namespace Managers
         {
             var sprite = gm.GetComponent<SpriteRenderer>();
 
-            if (sprite.color == new Color(colour.x, colour.y, colour.z, colour.z))
+            if (sprite.color == new Color(colour.x, colour.y, colour.z, colour.z) && sprite.color.a == colour.w)
                 return true;
             
             return false;
         }
         
-
-        enum WinStates
+        // Win condition types
+        enum WinType
         {
             OnValueEquals,
-            OnComplete
+            OnGoalReached
         }
 
+        // Win condition struct to hold data
         [System.Serializable]
         struct WinConditions
         {
-            [SerializeField] WinStates state;
-            [SerializeField] Vector3 value;
-            [SerializeField] GameObject gm;
-            [SerializeField] ValueOptions toCheck;
-            public bool conditionMet;
+            [SerializeField] public WinType state;
+            [SerializeField] public Vector4 value;
+            [SerializeField] public GameObject objectReference;
+            [SerializeField] public ValueToCheck toCheck;
+            [SerializeField] public bool conditionMet;
 
-            WinConditions(Vector3 value, WinStates state=WinStates.OnComplete, ValueOptions toCheck=ValueOptions.NA, GameObject gm=null)
+            WinConditions(Vector4 value, WinType state=WinType.OnGoalReached, ValueToCheck toCheck=ValueToCheck.NotApplicable, GameObject gm=null)
             {
                 this.state = state;
                 this.toCheck = toCheck;
                 this.value = value;
-                this.gm = gm;
+                this.objectReference = gm;
                 conditionMet = false;
             }
         }
 
-        enum ValueOptions
+        // The variable to check
+        enum ValueToCheck
         {
-            Colour,
-            Position,
-            Scale,
-            NA,
-            Rotation,
+            Colour4,
+            Position2D,
+            Scale2D,
+            Angle,
+            NotApplicable,
         }
 
     }
