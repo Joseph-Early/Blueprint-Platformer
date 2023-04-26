@@ -20,5 +20,5 @@ function Tick()
 	    col = col - amount
 	end
     ::after::
-	SetColour("P", col * 3, col * 2, col * 3, 1);
+	SetColour("Player", col * 3, col * 2, col * 3, 1);
 end

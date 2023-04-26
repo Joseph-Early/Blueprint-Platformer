@@ -10,13 +10,22 @@ namespace Managers
         // Tracks if the goal has been reached by the player
         public bool goalReached = false;
 
+        // Have all the conditions been met (cannot be unset)
+        public bool LevelComplete { get; private set; } = false;
+
+        // Store a reference to the check all conditions are met coroutine
+        private Coroutine checkAll;
+
         // Expose conditions to beat the level to the inspector
         [Header("Win Conditions")]
         [Tooltip("Win conditions for the level")]
         [SerializeField] WinConditions[] conditions;
 
         // Win condition checks
-        void Start() => StartCoroutine(CheckAllConditionsAreMet());
+        void Start()
+        {
+            checkAll = StartCoroutine(CheckAllConditionsAreMet());
+        }
 
         // Every half a second, check all win conditions are met
         private IEnumerator CheckAllConditionsAreMet()
@@ -49,7 +58,10 @@ namespace Managers
                 if (conditions.All(x => x.conditionMet))
                 {
                     // Win condition met
-                    Debug.Log("Win condition met");
+                    LevelComplete = true;
+
+                    // Stop coroutine
+                    StopCoroutine(checkAll);
                 }
 
                 // Wait                
