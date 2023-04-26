@@ -15,7 +15,7 @@ namespace GUI
                 var code = "";
                 // If the text editor is enabled, set the code to that provided by the player
                 if (textEditor.activeSelf)
-                        code = GameObject.Find("MainText").GetComponent<TextMeshProUGUI>().text;
+                    code = GameObject.Find("MainText").GetComponent<TextMeshProUGUI>().text;
 
                 // Toggle activeness
                 textEditor.SetActive(!textEditor.activeSelf);

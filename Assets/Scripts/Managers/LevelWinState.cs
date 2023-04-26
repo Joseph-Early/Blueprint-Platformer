@@ -19,7 +19,7 @@ namespace Managers
         // Expose conditions to beat the level to the inspector
         [Header("Win Conditions")]
         [Tooltip("Win conditions for the level")]
-        [SerializeField] WinConditions[] conditions;
+        public WinConditions[] conditions;
 
         // Win condition checks
         void Start()
@@ -125,7 +125,7 @@ namespace Managers
         #region Win condition struct and enums
         // Win condition struct to hold data
         [System.Serializable]
-        private struct WinConditions
+        public struct WinConditions
         {
             [SerializeField] public WinType state;  // Condition type - on value equals or on goal reached
             [SerializeField] public Vector4 value;  // Value to check (e.g. colour, position, scale, angle etc.)
@@ -145,7 +145,7 @@ namespace Managers
         }
 
         // The variable to check
-        private enum ValueToCheck
+        public enum ValueToCheck
         {
             Colour4,        // RGBA (0-1)
             Position2D,     // X and Y
@@ -155,7 +155,7 @@ namespace Managers
         }
 
         // Win condition types
-        enum WinType
+        public enum WinType
         {
             OnValueEquals,  // Check if a value equals a certain value
             OnGoalReached   // Check if the goal has been reached
