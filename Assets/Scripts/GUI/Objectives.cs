@@ -24,17 +24,17 @@ namespace GUI
                     sb.AppendLine($"Reach the goal {metString}");
 
                 else if (obj.toCheck == ValueToCheck.Position2D)
-                    sb.Append($"Set the position to {obj.value.x}, {obj.value.y} {metString}");
+                    sb.Append($"Set the position of {obj.objectReference.name} to {obj.value.x}, {obj.value.y} {metString}");
 
                 else if (obj.toCheck == ValueToCheck.Scale2D)
-                    sb.Append($"Set the Scale to {obj.value.x}, {obj.value.y} {metString}");
+                    sb.Append($"Set the Scale of {obj.objectReference.name} to {obj.value.x}, {obj.value.y} {metString}");
 
                 else if (obj.toCheck == ValueToCheck.Colour4)
-                    sb.Append($"Set the colour to {obj.value.x}, {obj.value.y}, {obj.value.z}, {obj.value.w} {metString}");
+                    sb.Append($"Set the colour of {obj.objectReference.name} to {obj.value.x}, {obj.value.y}, {obj.value.z}, {obj.value.w} {metString}");
 
                 else if (obj.toCheck == ValueToCheck.Angle)
-                    sb.Append($"Set the angle to {obj.value.x} {metString}");
-                    
+                    sb.Append($"Set the angle of {obj.objectReference.name} to {obj.value.x} {metString}");
+
                 else
                     sb.Append($"Error! {metString}");
             }
