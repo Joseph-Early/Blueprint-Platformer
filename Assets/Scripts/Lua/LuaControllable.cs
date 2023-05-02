@@ -12,6 +12,7 @@ namespace Lua
         private GameObject IdentifierNamePopUp;
 
         #region Serialise fields for enabling allowed functions on an object
+        #pragma warning disable 0414
         [SerializeField] private bool SetPositionRelative = false;
 
         [SerializeField] private bool SetPositionAbsolute = false;
@@ -20,6 +21,7 @@ namespace Lua
         [SerializeField] private bool SetScaleRelative = false;
         [SerializeField] private bool SetScaleAbsolute = false;
         [SerializeField] private bool SetSpriteColour = false;
+        #pragma warning restore 0414
 
         #endregion
 
