@@ -15,18 +15,18 @@ namespace Serialisation
         */
 
         [SerializeField] private UnityEditor.SceneAsset[] scenes; // Move this outside of the level manager class
-        private const string fileName = "levelsComplete.blue";
+        private const string fileName = "levelsComplete.blue";  // File name for complete data
 
-        private const string fileSignifierString = "BLUE";
-        private byte[] fileSignifierBytes;
+        private const string fileSignifierString = "BLUE"; // File signifier
+        private byte[] fileSignifierBytes; // File signature and end of file determiner
 
         private void Awake() {
-            var fileSig = new List<byte>();
-            foreach (var i in fileSignifierString)
-            {
-                fileSig.Add(System.Convert.ToByte(i));
-            }
+            
+            // Convert file signifier (string) to bytes
+            var fileSig = new List<byte>(); 
+            foreach (var i in fileSignifierString) fileSig.Add(System.Convert.ToByte(i));
 
+            // Convert file signature to an array
             fileSignifierBytes = fileSig.ToArray();
         }
 
