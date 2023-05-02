@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 17249011}
   - component: {fileID: 17249013}
   - component: {fileID: 17249010}
+  - component: {fileID: 17249014}
   m_Layer: 0
   m_Name: Goal
   m_TagString: Untagged
@@ -247,6 +248,26 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &17249014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17249009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b7b883fab13afd4eaf2faa7549fd152, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IdentifierInLevel: Goal
+  SetPositionRelative: 1
+  SetPositionAbsolute: 1
+  SetRotationRelative: 1
+  SetRotationAbsolute: 1
+  SetScaleRelative: 1
+  SetScaleAbsolute: 1
+  SetSpriteColour: 1
 --- !u!1 &83451363 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1937729412433764, guid: 79a74f96889fc1c429f043e7fa8caf72,
@@ -1240,7 +1261,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -0.0004272461, y: -56.47998}
+  m_AnchoredPosition: {x: -0.00048828125, y: -56.47998}
   m_SizeDelta: {x: 718.7151, y: 968.96}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!1 &1011646946
