@@ -33,15 +33,11 @@ namespace Lua
 
             // Add LuaControllable to find all LuaControllable's
             tag = "LuaControllable";
-
-            print(SetPositionRelative);
         }
 
         // On mouse over over game object, display name of IdentifierInLevel
         private void OnMouseEnter()
         {
-            print(IdentifierInLevel);
-
             // Create pop up with the name of the IdentifierInLevel
             IdentifierNamePopUp = Instantiate(Managers.Globals.Instance.IdentifierNamePopUp, transform.position, Quaternion.identity);
             IdentifierNamePopUp.GetComponent<TextMeshPro>().text = $"\"{IdentifierInLevel}\"";
