@@ -10,6 +10,7 @@ namespace Managers
 
         #region Public variables
         public GameObject IdentifierNamePopUp;
+        public GUI.DialogueSystem Dialogue;
         #endregion
 
         private void Awake() {

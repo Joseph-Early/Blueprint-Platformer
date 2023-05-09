@@ -13,7 +13,7 @@ namespace GUI
         [Header("Dialogue variables")]
         [SerializeField] private TMP_Text textComponent; // TMP text (component)
         [SerializeField] private GameObject dialogueSystemToHide; // Used to enable/disable based on if the dialogue is active or not
-        [SerializeField][Range(.01f, .1f)] private float timeDelayForEachCharacter; // Time between each character
+        [SerializeField][Range(.01f, .1f)] private float timeDelayForEachCharacter = .01f; // Time between each character
         [SerializeField] private bool startEnabled; // Whether to start enabled or not
         [SerializeField] private string[] messages; // Dialogue text
         [SerializeField] private GameObject[] ObjectsToHide; // Objects to hide when dialogue is active
@@ -83,12 +83,6 @@ namespace GUI
 
                 // Set messages to new messages
                 messages = newMessages;
-            }
-
-            // Print all the messages
-            foreach (var msg in messages)
-            {
-                print($"Message {msg}");
             }
         }
 
