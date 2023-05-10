@@ -22,17 +22,23 @@ namespace Managers
                     case TutorialPoint.LevelStart:
                         // After dialogue system is hidden, advance to ready to jump
                         if (Globals.Instance.Dialogue)
-                            tutorial++;
+                            tutorial = TutorialPoint.ReadyToJump;
+                            InitialisationOfTutorialStateHasRun = false;
                         break;
 
                     case TutorialPoint.ReadyToJump:
                         // Wait until player tries to jump with space and then advance state
+                        print("Here");
                         if (Input.GetKeyDown(KeyCode.Space))
-                            tutorial++;
+                        {
+                            tutorial = TutorialPoint.PlayerTriedToJump;
+                            InitialisationOfTutorialStateHasRun = false;
+                }
                     break;
                     case TutorialPoint.PlayerTriedToJump:
                         Globals.Instance.Dialogue.AddDialogue("Odd seems like jump hasn't been implemented yet...");
                         Globals.Instance.Dialogue.AddDialogue("We can wait around for the developer to implement the ability to jump but that could take a while or we could extend the game ourselves");
+                        Globals.Instance.Dialogue.SetDialogueActive(true);
                     break;
                     case TutorialPoint.PlayerCannotReachTheOtherSide: break;
                     case TutorialPoint.InTheCodeEditor: break;

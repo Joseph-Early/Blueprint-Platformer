@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7120723581128869059}
   - component: {fileID: 7120723581128869058}
   - component: {fileID: 7120723581128869060}
+  - component: {fileID: 4491473818413084103}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -64,6 +65,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IdentifierNamePopUp: {fileID: 7553524880390600973, guid: d53b8b4f8e5469c41ae14bed1e09926f,
     type: 3}
+  Dialogue: {fileID: 0}
 --- !u!114 &7120723581128869056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,3 +228,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textObjective: {fileID: 0}
+--- !u!114 &4491473818413084103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7120723581128869068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70d982c470d893f4aa010cf90ab9711a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridSize: 100
+  gridSpacing: 1
+  gridColor: {r: 1, g: 0, b: 0, a: 1}
+  xOffset: 0
+  zOffset: 0

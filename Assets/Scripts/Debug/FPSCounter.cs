@@ -1,7 +1,8 @@
 using UnityEngine;
 using TMPro;
 
-namespace GUI
+#if DEBUG
+namespace Debug
 {
 
     public class FPSCounter : MonoBehaviour
@@ -15,5 +16,5 @@ namespace GUI
             fpsCounter.text = $"FPS: {1f / Time.smoothDeltaTime}";
         }
     }
-
 }
+#endif

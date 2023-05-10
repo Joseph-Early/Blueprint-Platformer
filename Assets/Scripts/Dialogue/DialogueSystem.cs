@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace GUI
+namespace Dialogue
 {
     public class DialogueSystem : MonoBehaviour
     {
@@ -22,10 +22,10 @@ namespace GUI
         void Awake()
         {
             // Check if component is null
-            if (textComponent == null) { Debug.LogError("Dialogue TMP_Text not found on game object!"); return; }
+            if (textComponent == null) { UnityEngine.Debug.LogError("Dialogue TMP_Text not found on game object!"); return; }
 
             // Check of dialogue system is null
-            if (dialogueSystemToHide == null) { Debug.LogError("Dialogue system not set!"); return; }
+            if (dialogueSystemToHide == null) { UnityEngine.Debug.LogError("Dialogue system not set!"); return; }
 
             // Set text to an empty string
             textComponent.text = "";
