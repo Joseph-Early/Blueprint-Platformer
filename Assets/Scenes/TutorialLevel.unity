@@ -840,6 +840,30 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7309668359934971453}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1013830139 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2318914921665578525, guid: cd05b4251d8bd6147b5bce79417ba4bf,
+    type: 3}
+  m_PrefabInstance: {fileID: 2318914920555149785}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1013830140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013830139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76acb1220bcee3b4ea9a8675091bc5f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textComponent: {fileID: 0}
+  dialogueSystemToHide: {fileID: 0}
+  timeDelayForEachCharacter: 0.01
+  startEnabled: 0
+  messages: []
+  ObjectsToHide: []
 --- !u!850595691 &1119932366
 LightingSettings:
   m_ObjectHideFlags: 0

@@ -5,6 +5,9 @@ namespace Dialogue
 {
     public class DialogueSystem : MonoBehaviour
     {
+        /*
+        *   All dialogue must now be added from within a dialogue scene rather than 
+        */
         public bool DialogueIsActive { get; private set; } = false; // Is the dialogue system active
         private float timeLast;
 
@@ -17,6 +20,11 @@ namespace Dialogue
         [SerializeField] private bool startEnabled; // Whether to start enabled or not
         [SerializeField] private string[] messages; // Dialogue text
         [SerializeField] private GameObject[] ObjectsToHide; // Objects to hide when dialogue is active
+
+        [SerializeField] private DialogueScene[] dialogueScenes; // Dialogue scenes to execute
+        private int dialogueScene = 0;
+        private DialogueSceneState sceneState = DialogueSceneState.Begin;
+    
 
         // Start is called before the first frame update
         void Awake()
@@ -106,6 +114,33 @@ namespace Dialogue
                 return;
             }
 
+            // Execute the dialogue events
+            switch (sceneState)
+            {
+                // Run the begin code
+                case DialogueSceneState.Begin:
+                    // Invoke begin code
+                    dialogueScenes[dialogueScene].OnBegin();
+
+                    // Advance to continue scene state
+                break;
+
+                // Run the continue code
+                case DialogueSceneState.Continue:
+                    // Invoke continue code
+                    dialogueScenes[dialogueScene].OnContinue();
+                break;
+
+                // Run the end code
+                case DialogueSceneState.End:
+                    // Invoke end code
+                    dialogueScenes[dialogueScene].OnEnd();
+
+                    // Reset dialogue scene state
+                    sceneState = DialogueSceneState.Begin;
+                break;
+            }
+
 
             // Check if the message is not complete, add the next char every timeDelayForEachCharacter
             if (timeLast + timeDelayForEachCharacter < Time.time)
@@ -152,6 +187,13 @@ namespace Dialogue
                     }
                 }
             }
+        }
+
+        private enum DialogueSceneState
+        {
+            Begin,
+            Continue,
+            End
         }
     }
 }

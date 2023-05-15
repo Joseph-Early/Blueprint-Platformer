@@ -1,19 +1,19 @@
 using UnityEngine;
 
 namespace Dialogue.Scenes {
-    public class Scene : IDialogueScene
+    public class Scene : DialogueScene
     {
-        public void OnEnd()
+        public override void OnEnd()
         {
             
         }
 
-        public void OnBegin()
+        public override void OnBegin()
         {
-            
+            DialogueManager.AddDialogue("Test");
         }
 
-        public void OnContinue()
+        public override void OnContinue()
         {
             
         }
