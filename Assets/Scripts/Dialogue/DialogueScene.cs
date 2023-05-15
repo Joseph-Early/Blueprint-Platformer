@@ -11,7 +11,7 @@ namespace Dialogue {
         // Store a reference to the dialogue system
         public static DialogueSystem DialogueManager {get; private set;} = null;
         
-        private void Awake() => DialogueManager = Globals.Instance.Dialogue;
+        private void Start() => DialogueManager = Globals.Instance.Dialogue;
 
         // Overridable event methods
         public abstract void OnBegin();
