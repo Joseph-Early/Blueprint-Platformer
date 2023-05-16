@@ -128,8 +128,6 @@ namespace Dialogue
             // Invoke the OnBegin() method of the current scene
             _scenes[_currentScene].OnBegin();
 
-            UnityEngine.Debug.Log($"IMPORTANT :: {_scenes[_currentScene].name}");
-
             // Advance the scene state
             _sceneState = SceneStates.Continue;
         }

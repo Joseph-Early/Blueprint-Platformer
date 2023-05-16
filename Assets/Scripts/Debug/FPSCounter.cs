@@ -4,7 +4,6 @@ using TMPro;
 #if DEBUG
 namespace Debug
 {
-
     public class FPSCounter : MonoBehaviour
     {
         private TextMeshProUGUI fpsCounter;
