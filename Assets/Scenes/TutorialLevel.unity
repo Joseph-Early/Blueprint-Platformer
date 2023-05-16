@@ -129,6 +129,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7309668359934971453}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &102619722 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2318914920854929644, guid: cd05b4251d8bd6147b5bce79417ba4bf,
+    type: 3}
+  m_PrefabInstance: {fileID: 2318914920555149785}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &152481833
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -304,7 +310,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 7120723581011916392}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 407869040}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9816391ba107fb449271e20a8ef50cc, type: 3}
@@ -568,24 +574,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1de0c411f2a61904ab79e4c7b2edf854, type: 3}
---- !u!1 &407869040 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7120723581128869068, guid: 28e685d46e7e7e7459439d04734245f4,
-    type: 3}
-  m_PrefabInstance: {fileID: 7120723581011916392}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &407869049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 407869040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c230d1aefcc7d442a0ceba158061517, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &427798870
 GameObject:
   m_ObjectHideFlags: 0
@@ -858,12 +846,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76acb1220bcee3b4ea9a8675091bc5f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textComponent: {fileID: 0}
-  dialogueSystemToHide: {fileID: 0}
-  timeDelayForEachCharacter: 0.01
-  startEnabled: 0
-  messages: []
-  ObjectsToHide: []
+  _dialogueBox: {fileID: 102619722}
+  _dialogueText: {fileID: 1513350634}
+  _dialogueSpeed: 0.001
+  _scenes:
+  - {fileID: 1013830146}
+  - {fileID: 1013830147}
+  ActiveOnStart: 1
+--- !u!114 &1013830146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013830139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 173d2bd3c909a935eb7761de62bb6b45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1013830147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013830139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a93c43ff092bda87cb39a562a9374d7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!850595691 &1119932366
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -1037,7 +1050,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7797928, y: 1}
+    m_SensorSize: {x: 1.8793775, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1272,6 +1285,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1de0c411f2a61904ab79e4c7b2edf854, type: 3}
+--- !u!114 &1513350634 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2318914922308033305, guid: cd05b4251d8bd6147b5bce79417ba4bf,
+    type: 3}
+  m_PrefabInstance: {fileID: 2318914920555149785}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1731312381 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7274531467896683272, guid: 65bafc027b4a1724fa4c1b9d24b73d2e,
@@ -1547,7 +1572,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueSystem
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 2318914922308033305, guid: cd05b4251d8bd6147b5bce79417ba4bf,
+        type: 3}
+      propertyPath: m_text
+      value: Runtime set
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 2318914921665578512, guid: cd05b4251d8bd6147b5bce79417ba4bf, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cd05b4251d8bd6147b5bce79417ba4bf, type: 3}
 --- !u!1001 &7120723581011916392
 PrefabInstance:

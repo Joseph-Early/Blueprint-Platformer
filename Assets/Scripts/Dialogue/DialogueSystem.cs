@@ -1,199 +1,262 @@
-using TMPro;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+
+// TODO: Fix queue being empty causing errors if none are provided
+// Fixed by using IsComplete() to check if the queue is empty
+
+// TODO: Fix errors when no scenes are provided
+// Fixed by checking at least one scene is provided: if (_scenes.Length > 0)
+
+// TODO: Dialogue immediately advances the frame after the last character is added to the text
+// Solved by checking space bar is pressed
+
+// TODO: Way to check dialogue is complete in a scene
+// Added check to see if queue size is not zero
+
+// TODO: Add a way to skip dialogue
+
+// TODO: Fix issue with scene not advancing
+// Added _currentScene++ after OnEnd() is called
+// Still broken
+// Fixed using workaround: _dialogueBox.SetActive(!IsDialogueComplete());
+
 
 namespace Dialogue
 {
+    /// <summary>
+    /// C# controlled dialogue system for Unity.
+    /// </summary>
     public class DialogueSystem : MonoBehaviour
     {
-        /*
-        *   All dialogue must now be added from within a dialogue scene rather than 
-        */
-        public bool DialogueIsActive { get; private set; } = false; // Is the dialogue system active
-        private float timeLast;
+        // Component references
+        [Header("Component references")]
+        [SerializeField] private GameObject _dialogueBox;
+        [SerializeField] private TextMeshProUGUI _dialogueText;
 
-        private uint positionInMessage, messageInMessages;
+        // Configuration variables
+        [Header("Configuration variables")]
+        [SerializeField] private float _dialogueSpeed = 0.05f;
+        [SerializeField] private ScriptedScene[] _scenes;
 
-        [Header("Dialogue variables")]
-        [SerializeField] private TMP_Text textComponent; // TMP text (component)
-        [SerializeField] private GameObject dialogueSystemToHide; // Used to enable/disable based on if the dialogue is active or not
-        [SerializeField][Range(.01f, .1f)] private float timeDelayForEachCharacter = .01f; // Time between each character
-        [SerializeField] private bool startEnabled; // Whether to start enabled or not
-        [SerializeField] private string[] messages; // Dialogue text
-        [SerializeField] private GameObject[] ObjectsToHide; // Objects to hide when dialogue is active
+        // Public properties
+        public bool IsDialogueActive { get => _isDialogueActive; }
+        public static DialogueSystem Instance { get; private set; } = null;
+        [SerializeField] public bool ActiveOnStart = false;
 
-        [SerializeField] private DialogueScene[] dialogueScenes; // Dialogue scenes to execute
-        private int dialogueScene = 0;
-        private DialogueSceneState sceneState = DialogueSceneState.Begin;
-    
+        // Private variables
+        private Queue<string> _dialogueLines = new Queue<string>();
+        private int _currentDialogueLine;
+        private int _currentPlaceInDialogueLine;
+        private bool _isDialogueActive;
+        private int _currentScene;
+        private SceneStates _sceneState;
+        private float _dialogueTimer;
 
-        // Start is called before the first frame update
-        void Awake()
+        // Set the instance to this object
+        private void Awake()
         {
-            // Check if component is null
-            if (textComponent == null) { UnityEngine.Debug.LogError("Dialogue TMP_Text not found on game object!"); return; }
+            if (Instance != null)
+                Destroy(this);
 
-            // Check of dialogue system is null
-            if (dialogueSystemToHide == null) { UnityEngine.Debug.LogError("Dialogue system not set!"); return; }
-
-            // Set text to an empty string
-            textComponent.text = "";
-
-            // Set the initial time
-            timeLast = Time.time;
-
-            if (startEnabled) SetDialogueActive();
+            Instance = this;
         }
 
-        /// <summary>
-        /// Set the dialogue system to active or not
-        /// </summary>
-        /// <param name="MakeActive">Whether to make the dialogue system active or not</param>
-        public void SetDialogueActive(bool MakeActive = true)
+        // If no dialogue scenes are provided, throw an error
+        private void Start()
         {
-            if (messages.Length != 0) DialogueIsActive = MakeActive;
+            if (_scenes.Length == 0)
+                UnityEngine.Debug.LogError("No dialogue scenes provided!");
 
-            // Set objects to hide, if dialogue is active, else set them to active
-            if (ObjectsToHide != null)
-            {
-                foreach (var obj in ObjectsToHide)
-                {
-                    obj.gameObject.SetActive(!MakeActive);
-                }
-            }
+            // Set the current scene to the first scene
+            _currentScene = 0;
+
+            // If the dialogue is active on start, set the dialogue to active
+            if (ActiveOnStart)
+                _isDialogueActive = true;
+
+            // Set the text to blank to avoid prevent text equality errors when determining if complete
+            _dialogueText.text = "";
         }
 
-        /// <summary>
-        /// Add a message to the dialogue system
-        /// </summary>
-        /// <param name="message">Message to add</param>
-        public void AddDialogue(string message)
+        // Update the dialogue system
+        private void Update()
         {
-            if (messages == null)
-            {
-                messages = new string[1];
-                messages[0] = message;
-            }
-            else
-            {
-                // Increase array size by one and add dialogue
-                var newMessages = new string[messages.Length + 1];
+            // Hide/show the dialogue box
+            _dialogueBox.SetActive(_isDialogueActive);
 
-                // Copy over old values
-                int i = 0;
-                foreach (var msg in messages)
+            // Run methods for the scene state
+            if (_scenes.Length > 0)
+                switch (_sceneState)
                 {
-                    newMessages[i] = msg;
-                    i++;
+                    case SceneStates.Begin:
+                        BeginScene();
+
+                        break;
+                    case SceneStates.Continue:
+                        ContinueScene();
+                        break;
+                    case SceneStates.End:
+                        EndScene();
+                        break;
                 }
 
-                // Add the new value
-                newMessages[i] = message;
-
-                // Set messages to new messages
-                messages = newMessages;
-            }
+            // If the dialogue is active, update the dialogue
+            if (_isDialogueActive)
+                UpdateDialogue();
         }
 
-        // Update is called once per frame
-        void Update()
+        // Update the dialogue
+        private void UpdateDialogue()
         {
-            // Activate
-            if (DialogueIsActive)
-            {
-                dialogueSystemToHide.SetActive(true);
-            }
-            else
-            {
-                // Reset position and current display
-                positionInMessage = 0;
-                textComponent.text = "";
-
-                // De-activate
-                dialogueSystemToHide.SetActive(false);
-
+            // If the dialogue is complete, return
+            _dialogueBox.SetActive(!IsDialogueComplete()); // Workaround for dialogue box not hiding when dialogue is complete
+            if (IsDialogueComplete())
                 return;
-            }
 
-            // Execute the dialogue events
-            switch (sceneState)
-            {
-                // Run the begin code
-                case DialogueSceneState.Begin:
-                    // Invoke begin code
-                    dialogueScenes[dialogueScene].OnBegin();
-
-                    // Advance to continue scene state
-                break;
-
-                // Run the continue code
-                case DialogueSceneState.Continue:
-                    // Invoke continue code
-                    dialogueScenes[dialogueScene].OnContinue();
-                break;
-
-                // Run the end code
-                case DialogueSceneState.End:
-                    // Invoke end code
-                    dialogueScenes[dialogueScene].OnEnd();
-
-                    // Reset dialogue scene state
-                    sceneState = DialogueSceneState.Begin;
-                break;
-            }
-
-
-            // Check if the message is not complete, add the next char every timeDelayForEachCharacter
-            if (timeLast + timeDelayForEachCharacter < Time.time)
-            {
-                if (positionInMessage < messages[messageInMessages].Length)
-                {
-                    // Add the character
-                    var charArray = messages[messageInMessages].ToCharArray();
-                    textComponent.text += charArray[positionInMessage];
-                    positionInMessage++;
-                }
-
-                // Reset the last time
-                timeLast = Time.time;
-            }
-            else if (Input.GetKeyDown(KeyCode.Space))
-            {
-                if (positionInMessage < messages[messageInMessages].Length)
-                {
-                    // Display full message
-                    textComponent.text = messages[messageInMessages];
-                    positionInMessage = (uint)messages[messageInMessages].Length;
-                }
-                else
-                {
-                    // Advance to next message
-                    textComponent.text = "";
-                    positionInMessage = 0;
-                    messageInMessages++;
-
-                    // If dialogue has completed, delete all dialogue and hide the system
-                    if (messageInMessages >= messages.Length)
-                    {
-                        // Hide the dialogue
-                        SetDialogueActive(false);
-
-                        // Reset variables
-                        textComponent.text = "";
-                        positionInMessage = 0;
-                        messageInMessages = 0;
-
-                        // Set array to null
-                        messages = null;
-                    }
-                }
-            }
+            // Update the dialogue text
+            UpdateDialogueText();
         }
 
-        private enum DialogueSceneState
+        #region Scene event methods
+        // Begin the scene
+        private void BeginScene()
         {
-            Begin,
-            Continue,
-            End
+            // Invoke the OnBegin() method of the current scene
+            _scenes[_currentScene].OnBegin();
+
+            // Advance the scene state
+            _sceneState = SceneStates.Continue;
         }
+
+        // Continue the scene
+        private void ContinueScene()
+        {
+            // Invoke the OnContinue() method of the current scene
+            _scenes[_currentScene].OnContinue();
+
+            // If the current scene is complete, advance the scene state
+            if (_scenes[_currentScene].IsComplete())
+                _sceneState = SceneStates.End;
+        }
+
+        // End the scene
+        private void EndScene()
+        {
+            // Get the name of the current scene
+            UnityEngine.Debug.Log($"Scene: {_scenes[_currentScene].GetType().Name}");
+
+            // Invoke the OnEnd() method of the current scene
+            _scenes[_currentScene].OnEnd();
+
+            // Advance the current scene
+            _currentScene++;
+
+            // If the current scene is the last scene, set the dialogue to inactive
+            if (_currentScene == _scenes.Length)
+                _isDialogueActive = false;
+
+            // Advance the scene state
+            _sceneState = SceneStates.Begin;
+
+            // Reset the dialogue text
+            _dialogueText.text = "";
+
+            // Reset the dialogue lines
+            _dialogueLines.Clear();
+
+            // Reset the current dialogue line
+            _currentDialogueLine = 0;
+
+            // Reset the current place in the dialogue line
+            _currentPlaceInDialogueLine = 0;
+
+            // Reset the dialogue timer
+            _dialogueTimer = 0;
+
+            // Get the name of the current scene
+            UnityEngine.Debug.Log($"Scene: {_scenes[_currentScene].GetType().Name}");
+        }
+        #endregion
+
+        // Update the dialogue text
+        private void UpdateDialogueText()
+        {
+            // Check if the dialogue timer is greater than the dialogue speed
+            if (_dialogueTimer > _dialogueSpeed)
+            {                
+                // Reset the dialogue timer
+                _dialogueTimer = 0;
+
+                // Check if the message is complete
+                if (_dialogueText.text != _dialogueLines.Peek())
+                {
+                    // Add the next character
+                    _dialogueText.text += _dialogueLines.Peek()[_currentPlaceInDialogueLine];
+
+                    // Increase the current place in the dialogue line
+                    _currentPlaceInDialogueLine++;
+                }
+            }
+            else
+            {
+                // Increment the dialogue timer
+                _dialogueTimer += Time.deltaTime;
+            }
+
+            // Check if the dialogue is complete
+            if (_dialogueText.text == _dialogueLines.Peek())
+            {
+                // Check if the player has pressed the spacebar, return, mouse button, or gamepad button
+                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0) || Input.GetButtonDown("Submit"))
+                {
+                    // Advance the dialogue line
+                    AdvanceDialogueLine();
+                }
+            }
+        }
+
+        // Advance the dialogue line
+        private void AdvanceDialogueLine()
+        {
+            // Remove the current dialogue line from the queue
+            _dialogueLines.Dequeue();
+
+            // Reset the current place in the dialogue line
+            _currentPlaceInDialogueLine = 0;
+
+            // Check if the dialogue queue is empty
+            if (_dialogueLines.Count == 0)
+            {
+                // Reset the dialogue text
+                _dialogueText.text = "";
+            }
+            else
+            {
+                // Increment the current dialogue line
+                _currentDialogueLine++;
+
+                // Reset the dialogue text
+                _dialogueText.text = "";
+
+                // Set the current place in the dialogue line to 0
+                _currentPlaceInDialogueLine = 0;
+            }
+        }
+
+        #region Public methods
+        /// <summary>
+        /// Add a line of dialogue to the queue.
+        /// </summary>
+        /// <param name="dialogue">The dialogue to add to the queue.</param>
+        public void AddDialogue(string dialogue) => _dialogueLines.Enqueue(dialogue);
+
+        /// <summary>
+        /// Check if dialogue is complete.
+        /// </summary>
+        /// <returns>True if the dialogue is complete, false if not.</returns>
+        public bool IsDialogueComplete() => _dialogueLines.Count == 0;
+        #endregion
     }
 }
