@@ -848,7 +848,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dialogueBox: {fileID: 102619722}
   _dialogueText: {fileID: 1513350634}
-  _dialogueSpeed: 0.001
+  _dialogueSpeed: 0.005
   _scenes:
   - {fileID: 1013830146}
   - {fileID: 1013830147}
