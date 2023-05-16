@@ -72,6 +72,13 @@
       "source": "builtin",
       "dependencies": {}
     },
+    "com.unity.cinemachine": {
+      "version": "2.7.9",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.ext.nunit": {
       "version": "1.0.6",
       "depth": 1,
@@ -124,6 +131,15 @@
       "source": "registry",
       "dependencies": {
         "com.unity.modules.androidjni": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.postprocessing": {
+      "version": "3.1.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.physics": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },

@@ -77,7 +77,7 @@ And finally, it is possible to check if a command is allowed on that object usin
 
 And example of all of this from one of basic modules:
 ```cs
-                                    // String name used in Lua
+// String name used in Lua
 public static int SetPositionRelative(string controllerName, float x, float y)
 {
     // Get a reference to the controller

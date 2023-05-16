@@ -12,6 +12,16 @@ Print(text) -- Debug log for testing to Unity console
 
 
 function Tick()
-    -- Code called every frame
+    -- Code called every frame (invoked 60 tinmes a second)
 
+end
+
+-- Lerp function
+function Lerp(a, b, t)
+    return a + (b - a) * t
+end
+
+-- Move between two points
+function MoveBetweenAbs(object, x, y, x1, y1, time)
+    MoveAbs(object, Lerp(x, x1, time), Lerp(y, y1, time))
 end

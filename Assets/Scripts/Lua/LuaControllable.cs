@@ -12,6 +12,7 @@ namespace Lua
         private GameObject IdentifierNamePopUp;
 
         #region Serialise fields for enabling allowed functions on an object
+        #pragma warning disable 0414
         [SerializeField] private bool SetPositionRelative = false;
 
         [SerializeField] private bool SetPositionAbsolute = false;
@@ -20,6 +21,7 @@ namespace Lua
         [SerializeField] private bool SetScaleRelative = false;
         [SerializeField] private bool SetScaleAbsolute = false;
         [SerializeField] private bool SetSpriteColour = false;
+        #pragma warning restore 0414
 
         #endregion
 
@@ -31,15 +33,11 @@ namespace Lua
 
             // Add LuaControllable to find all LuaControllable's
             tag = "LuaControllable";
-
-            print(SetPositionRelative);
         }
 
         // On mouse over over game object, display name of IdentifierInLevel
         private void OnMouseEnter()
         {
-            print(IdentifierInLevel);
-
             // Create pop up with the name of the IdentifierInLevel
             IdentifierNamePopUp = Instantiate(Managers.Globals.Instance.IdentifierNamePopUp, transform.position, Quaternion.identity);
             IdentifierNamePopUp.GetComponent<TextMeshPro>().text = $"\"{IdentifierInLevel}\"";

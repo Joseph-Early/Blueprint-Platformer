@@ -1,0 +1,2 @@
+Tutorial time!
+You can move the player using A and D for left and right and press space to jump. Try it
