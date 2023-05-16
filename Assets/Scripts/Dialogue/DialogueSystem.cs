@@ -45,6 +45,8 @@ namespace Dialogue
         public static DialogueSystem Instance { get; private set; } = null;
         [SerializeField] public bool ActiveOnStart = false;
 
+        [HideInInspector] public bool Triggered = false;
+
         // Private variables
         private Queue<string> _dialogueLines = new Queue<string>();
         private int _currentDialogueLine;
@@ -87,7 +89,7 @@ namespace Dialogue
             _dialogueBox.SetActive(_isDialogueActive);
 
             // Run methods for the scene state
-            if (_scenes.Length > 0)
+            if (_scenes.Length > 0 && _scenes.Length > _currentScene)
                 switch (_sceneState)
                 {
                     case SceneStates.Begin:
@@ -125,6 +127,8 @@ namespace Dialogue
         {
             // Invoke the OnBegin() method of the current scene
             _scenes[_currentScene].OnBegin();
+
+            UnityEngine.Debug.Log($"IMPORTANT :: {_scenes[_currentScene].name}");
 
             // Advance the scene state
             _sceneState = SceneStates.Continue;
@@ -174,9 +178,6 @@ namespace Dialogue
 
             // Reset the dialogue timer
             _dialogueTimer = 0;
-
-            // Get the name of the current scene
-            UnityEngine.Debug.Log($"Scene: {_scenes[_currentScene].GetType().Name}");
         }
         #endregion
 
