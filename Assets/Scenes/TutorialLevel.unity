@@ -752,12 +752,12 @@ PrefabInstance:
     - target: {fileID: 8454992740029900708, guid: 1de0c411f2a61904ab79e4c7b2edf854,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 20.35
+      value: 17.27
       objectReference: {fileID: 0}
     - target: {fileID: 8454992740029900708, guid: 1de0c411f2a61904ab79e4c7b2edf854,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -6.88
+      value: -2.7
       objectReference: {fileID: 0}
     - target: {fileID: 8454992740029900708, guid: 1de0c411f2a61904ab79e4c7b2edf854,
         type: 3}
@@ -2692,6 +2692,18 @@ PrefabInstance:
       propertyPath: m_text
       value: Runtime set
       objectReference: {fileID: 0}
+    - target: {fileID: 2318914922308033305, guid: cd05b4251d8bd6147b5bce79417ba4bf,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 5ade3d4a97a27dc4399aa1e4782a3c82,
+        type: 2}
+    - target: {fileID: 2318914922308033305, guid: cd05b4251d8bd6147b5bce79417ba4bf,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 1287485977374225213, guid: 5ade3d4a97a27dc4399aa1e4782a3c82,
+        type: 2}
     - target: {fileID: 7441494312686342298, guid: cd05b4251d8bd6147b5bce79417ba4bf,
         type: 3}
       propertyPath: _scenes.Array.size
@@ -2965,6 +2977,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -0.000061035156
       objectReference: {fileID: 0}
+    - target: {fileID: 7309668359599447636, guid: 8430572ff69b26c48b28064f0bfbca04,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 5ade3d4a97a27dc4399aa1e4782a3c82,
+        type: 2}
+    - target: {fileID: 7309668359599447636, guid: 8430572ff69b26c48b28064f0bfbca04,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 1287485977374225213, guid: 5ade3d4a97a27dc4399aa1e4782a3c82,
+        type: 2}
     - target: {fileID: 7309668360553174952, guid: 8430572ff69b26c48b28064f0bfbca04,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
