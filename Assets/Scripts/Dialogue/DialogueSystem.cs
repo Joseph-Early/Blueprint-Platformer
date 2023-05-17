@@ -22,6 +22,8 @@ using TMPro;
 // Still broken
 // Fixed using workaround: _dialogueBox.SetActive(!IsDialogueComplete());
 
+// TODO: Fix no option to disable player movement
+
 
 namespace Dialogue
 {
