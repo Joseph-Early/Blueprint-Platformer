@@ -14,7 +14,6 @@ namespace Lua
         #region Serialise fields for enabling allowed functions on an object
         #pragma warning disable 0414
         [SerializeField] private bool SetPositionRelative = false;
-
         [SerializeField] private bool SetPositionAbsolute = false;
         [SerializeField] private bool SetRotationRelative = false;
         [SerializeField] private bool SetRotationAbsolute = false;
@@ -35,22 +34,29 @@ namespace Lua
             tag = "LuaControllable";
         }
 
-        // On mouse over over game object, display name of IdentifierInLevel
+        // On mouse over over object, update the information panel with the object info
         private void OnMouseEnter()
         {
-            // Create pop up with the name of the IdentifierInLevel
-            IdentifierNamePopUp = Instantiate(Managers.Globals.Instance.IdentifierNamePopUp, transform.position, Quaternion.identity);
-            IdentifierNamePopUp.GetComponent<TextMeshPro>().text = $"\"{IdentifierInLevel}\"";
+            // Enable panel
+            Managers.Globals.Instance.ObjectInformationPanel.SetActive(true);
+
+            // Update panel
+            Managers.Globals.Instance.ObjectInformationPanelObjectName.text = $"\"{IdentifierInLevel}\"";
+            Managers.Globals.Instance.ObjectInformationPanelFunctions.text = "Move\nMoveAbs\nRotate\nRotateAbs\nScale\nScaleAbs\nSetColour";
+            Managers.Globals.Instance.ObjectInformationPanelEnabled.text = $"{SetPositionRelative}\n{SetPositionAbsolute}\n{SetRotationRelative}\n{SetRotationAbsolute}\n{SetScaleRelative}\n{SetScaleAbsolute}\n{SetSpriteColour}".Replace("True", "Enabled").Replace("False", "Disabled");
         }
 
+        // On mouse exit, clear the information panel and hide it
         private void OnMouseExit()
         {
-            // Destroy the IdentifierNamePopUp
-            if (IdentifierNamePopUp != null)
-            {
-                Destroy(IdentifierNamePopUp);
-                IdentifierNamePopUp = null;
-            }
+            // Clear panel
+            Managers.Globals.Instance.ObjectInformationPanelObjectName.text = "";
+            Managers.Globals.Instance.ObjectInformationPanelFunctions.text = "";
+            Managers.Globals.Instance.ObjectInformationPanelEnabled.text = "";
+
+            // Disable panel
+            Managers.Globals.Instance.ObjectInformationPanel.SetActive(false);
+
         }
 
         /// <summary>
