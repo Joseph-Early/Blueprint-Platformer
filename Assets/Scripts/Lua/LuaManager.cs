@@ -132,14 +132,21 @@ namespace Lua
 
                 yield return new WaitForSeconds(1f / luaCallsASecond);
 
-                // Try to execute script, will fail if missing tick function
+                // If no Tick function exists, add blank one
+                if (LuaScript.Globals.Get(tickFunction).Type == DataType.Nil)
+                {
+                    LuaScript.Globals[tickFunction] = (Action)delegate { };
+                }
+
+                // Try to execute script
                 try
                 {
                     LuaScript.DoString(LuaScriptPlayerCode);
                 }
+                // Catch any errors and print to the in-game console
                 catch (System.Exception)
                 {
-                    // UnityEngine.Debug.Log("Invalid tick code");
+                    GUI.Console.Instance.AddMessage("Error executing script!");
                 }
             }
         }

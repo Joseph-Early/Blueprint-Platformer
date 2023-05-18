@@ -20,6 +20,9 @@ namespace GUI
                 // Toggle activeness
                 textEditor.SetActive(!textEditor.activeSelf);
 
+                // Clear the console
+                Console.Instance.Clear();
+
                 // Set the lua script
                 Managers.Globals.Instance.GetComponent<Lua.LuaManager>().SetScript(code);
             }

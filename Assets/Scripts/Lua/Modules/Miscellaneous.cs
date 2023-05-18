@@ -5,6 +5,10 @@ namespace Lua.Modules
 {
     public class Miscellaneous : MonoBehaviour
     {
-        public static void Print(string message) => UnityEngine.Debug.Log($"{message}");
+        /// <summary>
+        /// Print a message to the in-game console
+        /// </summary>
+        /// <param name="message">The message to print</param>
+        public static void Print(string message) => GUI.Console.Instance.AddMessage(message);
     }
 }
