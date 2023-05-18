@@ -87,8 +87,11 @@ namespace Dialogue
         // Update the dialogue system
         private void Update()
         {
-            // Hide/show the dialogue box
-            _dialogueBox.SetActive(_isDialogueActive);
+            // Game state update
+            if (Managers.GameState.Instance.CurrentState == Managers.GameState.State.InDialogue || Managers.GameState.Instance.CurrentState == Managers.GameState.State.Playing)
+            {
+                Managers.GameState.Instance.CurrentState = _dialogueBox.activeSelf ? Managers.GameState.State.InDialogue : Managers.GameState.State.Playing;
+            }
 
             // Run methods for the scene state
             if (_scenes.Length > 0 && _scenes.Length > _currentScene)
