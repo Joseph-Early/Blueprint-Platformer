@@ -20,6 +20,7 @@ namespace Lua
         [SerializeField] private bool SetScaleRelative = false;
         [SerializeField] private bool SetScaleAbsolute = false;
         [SerializeField] private bool SetSpriteColour = false;
+        [SerializeField] private bool DestroyObject = false;
         #pragma warning restore 0414
 
         #endregion
@@ -49,8 +50,8 @@ namespace Lua
 
                 // Update panel
                 Managers.Globals.Instance.ObjectInformationPanelObjectName.text = $"\"{IdentifierInLevel}\"";
-                Managers.Globals.Instance.ObjectInformationPanelFunctions.text = "Move\nMoveAbs\nRotate\nRotateAbs\nScale\nScaleAbs\nSetColour";
-                Managers.Globals.Instance.ObjectInformationPanelEnabled.text = $"{SetPositionRelative}\n{SetPositionAbsolute}\n{SetRotationRelative}\n{SetRotationAbsolute}\n{SetScaleRelative}\n{SetScaleAbsolute}\n{SetSpriteColour}".Replace("True", "Enabled").Replace("False", "Disabled");
+                Managers.Globals.Instance.ObjectInformationPanelFunctions.text = "Move\nMoveAbs\nRotate\nRotateAbs\nScale\nScaleAbs\nSetColour\nDestroy";
+                Managers.Globals.Instance.ObjectInformationPanelEnabled.text = $"{SetPositionRelative}\n{SetPositionAbsolute}\n{SetRotationRelative}\n{SetRotationAbsolute}\n{SetScaleRelative}\n{SetScaleAbsolute}\n{SetSpriteColour}\n{DestroyObject}".Replace("True", "Enabled").Replace("False", "Disabled");
             }
         }
 

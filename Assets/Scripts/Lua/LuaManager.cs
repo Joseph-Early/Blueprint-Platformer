@@ -66,6 +66,9 @@ namespace Lua
             // Sprite module
             LuaScript.Globals["SetColour"] = (Func<string, float, float, float, float, int>)SpriteModule.SetSpriteColour;
 
+            // Editor powers
+            LuaScript.Globals["Destroy"] = (Func<string, int>)EditorPowers.DestroyObject;
+
             // Miscellaneous
             LuaScript.Globals["Print"] = (Action<string>)Miscellaneous.Print;
             #endregion
