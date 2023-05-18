@@ -3,28 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-// TODO: Fix queue being empty causing errors if none are provided
-// Fixed by using IsComplete() to check if the queue is empty
-
-// TODO: Fix errors when no scenes are provided
-// Fixed by checking at least one scene is provided: if (_scenes.Length > 0)
-
-// TODO: Dialogue immediately advances the frame after the last character is added to the text
-// Solved by checking space bar is pressed
-
-// TODO: Way to check dialogue is complete in a scene
-// Added check to see if queue size is not zero
-
-// TODO: Add a way to skip dialogue
-
-// TODO: Fix issue with scene not advancing
-// Added _currentScene++ after OnEnd() is called
-// Still broken
-// Fixed using workaround: _dialogueBox.SetActive(!IsDialogueComplete());
-
-// TODO: Fix no option to disable player movement
-
-
 namespace Dialogue
 {
     /// <summary>
