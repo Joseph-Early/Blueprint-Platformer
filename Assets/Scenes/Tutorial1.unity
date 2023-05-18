@@ -773,18 +773,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8454992740029900762, guid: 1de0c411f2a61904ab79e4c7b2edf854,
         type: 3}
+      propertyPath: DestroyObject
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8454992740029900762, guid: 1de0c411f2a61904ab79e4c7b2edf854,
+        type: 3}
       propertyPath: SetSpriteColour
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8454992740029900762, guid: 1de0c411f2a61904ab79e4c7b2edf854,
         type: 3}
       propertyPath: SetScaleAbsolute
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8454992740029900762, guid: 1de0c411f2a61904ab79e4c7b2edf854,
         type: 3}
       propertyPath: SetScaleRelative
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8454992740029900762, guid: 1de0c411f2a61904ab79e4c7b2edf854,
         type: 3}
@@ -1718,6 +1723,7 @@ MonoBehaviour:
   SetScaleRelative: 0
   SetScaleAbsolute: 0
   SetSpriteColour: 0
+  DestroyObject: 0
 --- !u!212 &1279515806
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2552,6 +2558,7 @@ MonoBehaviour:
   SetScaleRelative: 0
   SetScaleAbsolute: 0
   SetSpriteColour: 0
+  DestroyObject: 0
 --- !u!212 &2129306074
 SpriteRenderer:
   m_ObjectHideFlags: 0
