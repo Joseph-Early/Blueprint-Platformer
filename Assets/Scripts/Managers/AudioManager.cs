@@ -9,7 +9,6 @@ namespace Managers
     {
         private AudioSource audioSource;
         [SerializeField] AudioClip[] backgroundTracks;
-        [SerializeField] AudioClip[] SFX;
 
         private int currentTrack = 0;
 
