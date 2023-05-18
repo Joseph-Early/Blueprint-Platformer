@@ -4,6 +4,12 @@ namespace Lua.Modules
 {
     public class Movement : MonoBehaviour
     {
+        /// <summary>
+        /// Moves the controller relative to its current position
+        /// </summary>
+        /// <param name="controllerName">The name of the controller</param>
+        /// <param name="x">The amount to move the controller on the x axis</param>
+        /// <param name="y">The amount to move the controller on the y axis</param>
         public static int SetPositionRelative(string controllerName, float x, float y)
         {
             var controller = Utils.ReturnLuaObject(controllerName);
@@ -35,6 +41,13 @@ namespace Lua.Modules
             // Return 1 - error
             return 1;
         }
+
+        /// <summary>
+        /// Moves the controller to an absolute position
+        /// </summary>
+        /// <param name="controllerName">The name of the controller</param>
+        /// <param name="x">The x position to move the controller to</param>
+        /// <param name="y">The y position to move the controller to</param>
         public static int SetPositionAbsolute(string controllerName, float x, float y)
         {
             var controller = Utils.ReturnLuaObject(controllerName);

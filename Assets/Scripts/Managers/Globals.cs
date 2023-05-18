@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace Managers
 {
@@ -9,8 +10,8 @@ namespace Managers
         public static Globals Instance;
 
         #region Public variables
-        public GameObject IdentifierNamePopUp;
-        public Dialogue.DialogueSystem Dialogue;
+        public GameObject ObjectInformationPanel;
+        public TextMeshProUGUI ObjectInformationPanelObjectName, ObjectInformationPanelFunctions, ObjectInformationPanelEnabled;
         #endregion
 
         private void Awake() {

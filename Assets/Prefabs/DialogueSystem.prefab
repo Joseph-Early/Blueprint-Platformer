@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 2318914921665578513}
   - component: {fileID: 2318914921665578526}
   - component: {fileID: 2318914921665578527}
-  - component: {fileID: 2318914921665578512}
+  - component: {fileID: 7441494312686342298}
   m_Layer: 5
   m_Name: DialogueSystem
   m_TagString: Untagged
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2318914921665578512
+--- !u!114 &7441494312686342298
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,19 +186,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2318914921665578525}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4503315759cbac949aa861ef0d20cb45, type: 3}
+  m_Script: {fileID: 11500000, guid: 76acb1220bcee3b4ea9a8675091bc5f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textComponent: {fileID: 2318914922308033305}
-  dialogueSystemToHide: {fileID: 2318914921665578525}
-  timeDelayForEachCharacter: 0.01
-  startEnabled: 1
-  messages:
-  - AAhgiesuopuporsjpojopjseop
-  - qwqhrdstdhre
-  - 2454625
-  - '''#''#[][]''#@~}{}'
-  ObjectsToHide: []
+  _dialogueBox: {fileID: 2318914920854929644}
+  _dialogueText: {fileID: 2318914922308033305}
+  _dialogueSpeed: 0.005
+  _scenes: []
+  ActiveOnStart: 1
+  Triggered: 0
 --- !u!1 &2318914922308033383
 GameObject:
   m_ObjectHideFlags: 0

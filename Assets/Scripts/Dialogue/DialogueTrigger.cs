@@ -6,7 +6,7 @@ namespace Dialogue
     {
         private void OnTriggerEnter2D(Collider2D other) {
             DialogueSystem.Instance.Triggered = true;
+            Destroy(this);
         }
     }
-
 }

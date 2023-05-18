@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b7b883fab13afd4eaf2faa7549fd152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IdentifierInLevel: Player
+  IdentifierInLevel: actor_player
   SetPositionRelative: 1
   SetPositionAbsolute: 1
   SetRotationRelative: 1
