@@ -35,15 +35,23 @@ namespace Lua
         }
 
         // On mouse over over object, update the information panel with the object info
-        private void OnMouseEnter()
+        private void OnMouseOver()
         {
-            // Enable panel
-            Managers.Globals.Instance.ObjectInformationPanel.SetActive(true);
+            // If in play mode or in dialogue, show the object name
+            if (Managers.GameState.Instance.CurrentState == Managers.GameState.State.Playing || Managers.GameState.Instance.CurrentState == Managers.GameState.State.InDialogue)
+            {
+                // If showing already, don't show again
+                if (Managers.Globals.Instance.ObjectInformationPanel.activeSelf)
+                    return;
 
-            // Update panel
-            Managers.Globals.Instance.ObjectInformationPanelObjectName.text = $"\"{IdentifierInLevel}\"";
-            Managers.Globals.Instance.ObjectInformationPanelFunctions.text = "Move\nMoveAbs\nRotate\nRotateAbs\nScale\nScaleAbs\nSetColour";
-            Managers.Globals.Instance.ObjectInformationPanelEnabled.text = $"{SetPositionRelative}\n{SetPositionAbsolute}\n{SetRotationRelative}\n{SetRotationAbsolute}\n{SetScaleRelative}\n{SetScaleAbsolute}\n{SetSpriteColour}".Replace("True", "Enabled").Replace("False", "Disabled");
+                // Enable panel
+                Managers.Globals.Instance.ObjectInformationPanel.SetActive(true);
+
+                // Update panel
+                Managers.Globals.Instance.ObjectInformationPanelObjectName.text = $"\"{IdentifierInLevel}\"";
+                Managers.Globals.Instance.ObjectInformationPanelFunctions.text = "Move\nMoveAbs\nRotate\nRotateAbs\nScale\nScaleAbs\nSetColour";
+                Managers.Globals.Instance.ObjectInformationPanelEnabled.text = $"{SetPositionRelative}\n{SetPositionAbsolute}\n{SetRotationRelative}\n{SetRotationAbsolute}\n{SetScaleRelative}\n{SetScaleAbsolute}\n{SetSpriteColour}".Replace("True", "Enabled").Replace("False", "Disabled");
+            }
         }
 
         // On mouse exit, clear the information panel and hide it

@@ -24,14 +24,16 @@ namespace Actor.Player
 
         private void Update()
         {
-            #region Movement
-            float translation = Input.GetAxis("Horizontal") * speed * Time.deltaTime; // Check if the player has pressed left or right and calculate speed
-            trans.Translate(translation, 0, 0); // Translate the player
-            #endregion
-
             // Check if fell off world
             if (transform.position.y <= -10)
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+            // If the game is not in the playing state, return
+            if (Managers.GameState.Instance.CurrentState != Managers.GameState.State.Playing) return;
+
+            // Move the player left or right
+            float translation = Input.GetAxis("Horizontal") * speed * Time.deltaTime; // Check if the player has pressed left or right and calculate speed
+            trans.Translate(translation, 0, 0); // Translate the player
         }
     }
 }
