@@ -7,6 +7,7 @@ Scale("obj_name", x, y) -- Scale relative
 ScaleAbs("obj_name", x, y) -- Scale Absolute
 SetColour("obj_name", r, g, b, a) -- Set Colour RGBA (0-1)
 Print(text) -- Debug log for testing to Unity console
+Destroy("obj_name") -- Destroy object
 
 -- Code called at start
 
