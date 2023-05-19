@@ -13,6 +13,7 @@ namespace Lua
 
         #region Serialise fields for enabling allowed functions on an object
         #pragma warning disable 0414
+        #pragma warning disable 0108
         [SerializeField] private bool SetPositionRelative = false;
         [SerializeField] private bool SetPositionAbsolute = false;
         [SerializeField] private bool SetRotationRelative = false;
@@ -21,6 +22,7 @@ namespace Lua
         [SerializeField] private bool SetScaleAbsolute = false;
         [SerializeField] private bool SetSpriteColour = false;
         [SerializeField] private bool DestroyObject = false;
+        #pragma warning restore 0108
         #pragma warning restore 0414
 
         #endregion
