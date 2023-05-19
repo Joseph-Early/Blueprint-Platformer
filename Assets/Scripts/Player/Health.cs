@@ -1,9 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-namespace Actor.Components
+namespace Player
 {
     public class Health : MonoBehaviour
     {
@@ -26,6 +25,6 @@ namespace Actor.Components
                 Kill();
         }
 
-        internal virtual void Kill() => Destroy(gameObject);
+        internal virtual void Kill() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
