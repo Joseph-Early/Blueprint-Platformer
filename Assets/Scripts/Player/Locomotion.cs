@@ -3,22 +3,18 @@ using UnityEngine;
 
 namespace Player
 {
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Health))]
     public class Locomotion : MonoBehaviour
     {
         [SerializeField] private float speed = 5; // Player speed
 
         private Transform trans;
-        private Rigidbody2D rb;
 
         private void Awake()
         {
             // Get the transform
             trans = GetComponent<Transform>();
-            if (trans == null) throw new Exception("Unable to get transform");
-
-            // Get a reference to the rigidbody2D
-            rb = GetComponent<Rigidbody2D>();
-            if (rb == null) throw new Exception("Unable to get transform");
         }
 
         private void Update()

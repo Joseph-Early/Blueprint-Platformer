@@ -15,10 +15,15 @@ namespace Managers
         // Get a reference to the audio source on awake
         private void Awake()
         {
+            // Get the audio source component
             audioSource = GetComponent<AudioSource>();
 
+            // Check if the audio source component is null
             if (audioSource is null)
                 throw new System.Exception("AudioSource component cannot be found!");
+
+            // Prevent the audio manager from being destroyed on scene load
+            DontDestroyOnLoad(gameObject);
         }
 
         // On Start, start playing first track of background music
