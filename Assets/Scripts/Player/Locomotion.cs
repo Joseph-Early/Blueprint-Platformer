@@ -1,8 +1,7 @@
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-namespace Actor.Player
+namespace Player
 {
     public class Locomotion : MonoBehaviour
     {
@@ -26,7 +25,7 @@ namespace Actor.Player
         {
             // Check if fell off world
             if (transform.position.y <= -10)
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                GetComponent<Health>().health = 0;
 
             // If the game is not in the playing state, return
             if (Managers.GameState.Instance.CurrentState != Managers.GameState.State.Playing) return;
