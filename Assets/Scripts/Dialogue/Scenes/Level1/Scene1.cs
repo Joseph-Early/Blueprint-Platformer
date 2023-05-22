@@ -17,7 +17,7 @@ namespace Dialogue.Scenes.Level1
         public override void OnContinue()
         {
             // Check messages are complete and player moved
-            if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D)) && DialogueSystem.Instance.IsDialogueComplete())
+            if (Input.GetAxis("Horizontal") != 0 && DialogueSystem.Instance.IsDialogueComplete())
                 Invoke("NextScene", 0.5f); // Wait 0.5 seconds before moving to the next scene
         }
 

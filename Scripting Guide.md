@@ -27,7 +27,7 @@ Why use Lua? Lua is widely supported scripting language used in game development
 ## Basic Syntax
 So what does Lua look like? Here is an example of a simple Lua script:
 ```lua
-local counter = 0
+counter = 0
 
 -- Each frame print the value of counter to the console
 function Tick()
@@ -141,7 +141,7 @@ myVariable = "Hello" .. "World" -- counter is now "HelloWorld"
 ## Defining Custom Functions
 You should have a basic understanding of using variables but you may want to write your own if there is code you will use in multiple places.
 
-Variables are defined using the `function` keyword followed by a name for the function and `()` e.g.:
+Functions are defined using the `function` keyword followed by a name for the function and `()` e.g.:
 ```lua
 function MyFunction()
     -- Code goes here
@@ -150,9 +150,7 @@ end
 
 Which we can call using `MyFunction()` e.g.:
 ```lua
-function MyFunction()
-    Print("Hello World!")
-end
+MyFunction()
 ```
 
 Functions can be nested inside of other functions e.g.:
