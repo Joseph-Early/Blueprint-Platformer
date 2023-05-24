@@ -19,7 +19,8 @@ For details of the development of the game, visit the [Trello board](https://tre
     - Jump
     - Move left and right
     - Health
-- Enemies
+- Dialogue manager
+    - Invokes scripted scene with begin, continue and update methods
 - Lua Manager
 - Audio manager
 
