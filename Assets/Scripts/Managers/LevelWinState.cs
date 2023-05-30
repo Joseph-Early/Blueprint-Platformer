@@ -60,7 +60,10 @@ namespace Managers
                     // Win condition met
                     LevelComplete = true;
 
-                    // Stop coroutine
+                    // Load the level select scene
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+
+                    // Stop the coroutine
                     StopCoroutine(checkAll);
                 }
 
